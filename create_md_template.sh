@@ -5,7 +5,9 @@ TIME=$(date +'%Y-%m-%d %H:%M')
 
 TITLE="$1"
 
-cat << _EOF_ > content/"$DATE"-"$TITLE".md
+FILE=content/"$DATE"-"$TITLE".md
+
+cat << _EOF_ > $FILE
 Title: 
 Date: $TIME
 Modified: 
@@ -14,3 +16,4 @@ Tags:
 Authors: meoow
 _EOF_
 
+${EDITOR:+vim} $FILE

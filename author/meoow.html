@@ -20,7 +20,58 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/multi-upload.html">Multi Upload</a></h1>
+                    <h1 class="entry-title"><a href="/combination.html">Combination</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-06-24T09:43:00">
+                Tue 24 June 2014
+        </abbr>
+
+        <address class="vcard author">
+                By <a class="url fn" href="/author/meoow.html">meoow</a>
+        </address>
+<p>In <a href="/category/article.html">Article</a>. </p>
+<p>tags: <a href="/tag/go.html">go</a></p>
+</footer><!-- /.post-info --><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">n</span> <span class="p">=</span> <span class="mi">6</span>
+    <span class="kd">var</span> <span class="nx">k</span> <span class="p">=</span> <span class="mi">3</span>
+    <span class="nx">ar</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span>
+    <span class="nx">comb</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">ar</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">damn</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">count</span> <span class="p">=</span> <span class="mi">0</span>
+
+<span class="kd">func</span> <span class="nx">comb</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">k</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">arr</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">count</span><span class="o">++</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;--&quot;</span><span class="p">,</span> <span class="nx">count</span><span class="p">,</span> <span class="s">&quot;--&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="nx">k</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span> <span class="p">{</span>
+        <span class="nx">arr</span><span class="p">[</span><span class="nx">k</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">i</span>
+        <span class="k">if</span> <span class="nx">k</span> <span class="p">&gt;</span> <span class="mi">1</span> <span class="p">{</span>
+            <span class="nx">comb</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nx">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nx">arr</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">count</span><span class="o">--</span>
+<span class="p">}</span>
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/multi-upload.html" rel="bookmark"
+                           title="Permalink to Multi Upload">Multi Upload</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-06-24T09:36:00">
                 Tue 24 June 2014
@@ -31,7 +82,7 @@
         </address>
 <p>In <a href="/category/article.html">Article</a>. </p>
 <p>tags: <a href="/tag/go.html">go</a></p>
-</footer><!-- /.post-info --><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+</footer><!-- /.post-info -->                <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
     <span class="s">&quot;io&quot;</span>
@@ -56,68 +107,14 @@
     <span class="k">defer</span> <span class="nx">input</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
 
     <span class="nx">stat</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">Stat</span><span class="p">()</span>
-    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-
-    <span class="nx">pipeOut</span><span class="p">,</span> <span class="nx">pipeIn</span> <span class="o">:=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Pipe</span><span class="p">()</span>
-    <span class="nx">bar</span> <span class="o">:=</span> <span class="nx">pb</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nx">stat</span><span class="p">.</span><span class="nx">Size</span><span class="p">())).</span><span class="nx">SetUnits</span><span class="p">(</span><span class="nx">pb</span><span class="p">.</span><span class="nx">U_BYTES</span><span class="p">)</span>
-    <span class="nx">bar</span><span class="p">.</span><span class="nx">ShowSpeed</span> <span class="p">=</span> <span class="kc">true</span>
-
-    <span class="nx">writer</span> <span class="o">:=</span> <span class="nx">multipart</span><span class="p">.</span><span class="nx">NewWriter</span><span class="p">(</span><span class="nx">pipeIn</span><span class="p">)</span>
-
-    <span class="c1">// do the request concurrently</span>
-    <span class="kd">var</span> <span class="nx">resp</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Response</span>
-    <span class="nx">done</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">error</span><span class="p">)</span>
-    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-
-        <span class="c1">// prepare request</span>
-        <span class="nx">req</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">NewRequest</span><span class="p">(</span><span class="s">&quot;POST&quot;</span><span class="p">,</span> <span class="s">&quot;http://localhost:9000/upload&quot;</span><span class="p">,</span> <span class="nx">pipeOut</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-            <span class="nx">done</span> <span class="o">&lt;-</span> <span class="nx">err</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-
-        <span class="nx">req</span><span class="p">.</span><span class="nx">Header</span><span class="p">.</span><span class="nx">Set</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="nx">writer</span><span class="p">.</span><span class="nx">FormDataContentType</span><span class="p">())</span>
-        <span class="nx">log</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Created Request&quot;</span><span class="p">)</span>
-        <span class="nx">bar</span><span class="p">.</span><span class="nx">Start</span><span class="p">()</span>
-
-        <span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">DefaultClient</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-            <span class="nx">done</span> <span class="o">&lt;-</span> <span class="nx">err</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-
-
-        <span class="nx">done</span> <span class="o">&lt;-</span> <span class="kc">nil</span>
-    <span class="p">}()</span>
-
-    <span class="nx">part</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">writer</span><span class="p">.</span><span class="nx">CreateFormFile</span><span class="p">(</span><span class="s">&quot;file&quot;</span><span class="p">,</span> <span class="nx">filepath</span><span class="p">.</span><span class="nx">Base</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-
-    <span class="nx">out</span> <span class="o">:=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">MultiWriter</span><span class="p">(</span><span class="nx">part</span><span class="p">,</span> <span class="nx">bar</span><span class="p">)</span>
-    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Copy</span><span class="p">(</span><span class="nx">out</span><span class="p">,</span> <span class="nx">input</span><span class="p">)</span>
-    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-
-    <span class="nx">check</span><span class="p">(</span><span class="nx">writer</span><span class="p">.</span><span class="nx">Close</span><span class="p">())</span>
-    <span class="nx">check</span><span class="p">(</span><span class="nx">pipeIn</span><span class="p">.</span><span class="nx">Close</span><span class="p">())</span> <span class="c1">// need to close the pipe to</span>
-
-    <span class="nx">check</span><span class="p">(</span><span class="o">&lt;-</span><span class="nx">done</span><span class="p">)</span>
-
-    <span class="nx">bar</span><span class="p">.</span><span class="nx">FinishPrint</span><span class="p">(</span><span class="s">&quot;Upload done!&quot;</span><span class="p">)</span>
-
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nx">check</span><span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">_</span><span class="p">,</span> <span class="nx">file</span><span class="p">,</span> <span class="nx">line</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Caller</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;Fatal from &lt;%s:%d&gt;\nError:%s&quot;</span><span class="p">,</span> <span class="nx">file</span><span class="p">,</span> <span class="nx">line</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>                </article>
+    <span class="nx">check ...</span></pre></div>
+                <a class="readmore" href="/multi-upload.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+            </ol><!-- /#posts-list -->
 <p class="paginator">
     Page 1 / 1
 </p>
-            </aside><!-- /#featured -->
-            </ol><!-- /#posts-list -->
             </section><!-- /#content -->
         <section id="extras" class="body">
         </section><!-- /#extras -->
