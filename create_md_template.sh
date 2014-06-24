@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DATE=$(date +%Y-%m-%d)
-TIME=$(date +%Y-%m-%d %H:%M)
+TIME=$(date +'%Y-%m-%d %H:%M')
 
 TITLE="$1"
 
