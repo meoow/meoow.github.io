@@ -9,7 +9,7 @@ cat << _EOF_ > content/"$DATE"-"$TITLE".md
 Title: 
 Date: $TIME
 Modified: 
-Category: 
+Category: Article
 Tags: 
 Authors: meoow
 _EOF_

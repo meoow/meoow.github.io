@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>meoow</title>
+        <title>Multi Upload</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -14,13 +14,18 @@
         <header id="banner" class="body">
                 <h1><a href="/">meoow </a></h1>
                 <nav><ul>
-                    <li><a href="/category/article.html">Article</a></li>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/multi-upload.html" rel="bookmark"
+           title="Permalink to Multi Upload">Multi Upload</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/multi-upload.html">Multi Upload</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-06-24T09:36:00">
                 Tue 24 June 2014
@@ -31,7 +36,7 @@
         </address>
 <p>In <a href="/category/article.html">Article</a>. </p>
 <p>tags: <a href="/tag/go.html">go</a></p>
-</footer><!-- /.post-info --><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+</footer><!-- /.post-info -->      <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
     <span class="s">&quot;io&quot;</span>
@@ -112,13 +117,11 @@
         <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;Fatal from &lt;%s:%d&gt;\nError:%s&quot;</span><span class="p">,</span> <span class="nx">file</span><span class="p">,</span> <span class="nx">line</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>                </article>
-<p class="paginator">
-    Page 1 / 1
-</p>
-            </aside><!-- /#featured -->
-            </ol><!-- /#posts-list -->
-            </section><!-- /#content -->
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
         <section id="extras" class="body">
         </section><!-- /#extras -->
 
