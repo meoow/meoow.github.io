@@ -20,7 +20,50 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/combination.html">Combination</a></h1>
+                    <h1 class="entry-title"><a href="/struct-reflect.html">struct reflect</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-06-25T19:58:00">
+                Wed 25 June 2014
+        </abbr>
+
+        <address class="vcard author">
+                By <a class="url fn" href="/author/meoow.html">meoow</a>
+        </address>
+<p>In <a href="/category/article.html">Article</a>. </p>
+<p>tags: <a href="/tag/go.html">go</a></p>
+</footer><!-- /.post-info --><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;reflect&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">x</span> <span class="o">:=</span> <span class="kd">struct</span> <span class="p">{</span>
+        <span class="nx">Foo</span> <span class="kt">string</span>
+        <span class="nx">Bar</span> <span class="kt">int</span>
+    <span class="p">}{</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span>
+
+    <span class="nx">t</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">TypeOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+    <span class="nx">v</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">ValueOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nb">make</span><span class="p">([]</span><span class="kd">struct</span><span class="p">{},</span> <span class="nx">t</span><span class="p">.</span><span class="nx">NumField</span><span class="p">())</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">Field</span><span class="p">(</span><span class="nx">i</span><span class="p">).</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">FieldByName</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">Field</span><span class="p">(</span><span class="nx">i</span><span class="p">).</span><span class="nx">Name</span><span class="p">).</span><span class="nx">Interface</span><span class="p">())</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/combination.html" rel="bookmark"
+                           title="Permalink to Combination">Combination</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-06-24T09:43:00">
                 Tue 24 June 2014
@@ -31,7 +74,7 @@
         </address>
 <p>In <a href="/category/article.html">Article</a>. </p>
 <p>tags: <a href="/tag/go.html">go</a></p>
-</footer><!-- /.post-info --><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+</footer><!-- /.post-info -->                <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
 
@@ -50,20 +93,10 @@
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;--&quot;</span><span class="p">,</span> <span class="nx">count</span><span class="p">,</span> <span class="s">&quot;--&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="nx">k</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span> <span class="p">{</span>
         <span class="nx">arr</span><span class="p">[</span><span class="nx">k</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">i</span>
-        <span class="k">if</span> <span class="nx">k</span> <span class="p">&gt;</span> <span class="mi">1</span> <span class="p">{</span>
-            <span class="nx">comb</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nx">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nx">arr</span><span class="p">)</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="nx">count</span><span class="o">--</span>
-<span class="p">}</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+        <span class="k">if</span> <span class="nx">k</span> <span class="p">&gt;</span> <span class="mi">1 ...</span></pre></div>
+                <a class="readmore" href="/combination.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
