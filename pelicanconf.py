@@ -4,9 +4,9 @@ from __future__ import unicode_literals
 
 AUTHOR = u'meoow'
 SITENAME = u'meoow'
-SITEURL = ''
+SITEURL = 'meoow.github.io'
 
-TIMEZONE = 'Asia/Beijing'
+#TIMEZONE = 'Asia/Beijing'
 
 DEFAULT_LANG = u'en'
 
