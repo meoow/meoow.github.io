@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>切换IOS下APP的后台运行模式</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/qie-huan-iosxia-appde-hou-tai-yun-xing-mo-shi.html" rel="bookmark"
+           title="Permalink to 切换IOS下APP的后台运行模式">切换IOS下APP的后台运行模式</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/ios.html">iOS</a></span>
+</footer><!-- /.post-info -->      <p>iOS里APP有几种后台运行模式，例如在后台立即退出（如Cydia），在后台暂停（大部分app），在后台运行（播放音乐，广播，GPS定位等）
+我搞了个切换的方法，用ssh链接到iOS设备上，传递你要更改的app的Info.plist文件就好了
+程序：</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python2.7</span>
+
+<span class="kn">import</span> <span class="nn">plistlib</span> <span class="kn">as</span> <span class="nn">plib</span>
+<span class="kn">import</span> <span class="nn">subprocess</span> <span class="kn">as</span> <span class="nn">subp</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">closing</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">tempfile</span><span class="o">,</span> <span class="nn">shutil</span><span class="o">,</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">NameAppend</span> <span class="kn">import</span> <span class="n">nameAppend</span>
+
+<span class="k">def</span> <span class="nf">parsePlistToString</span><span class="p">(</span><span class="n">plistFile</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="err">　</span><span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">plistFile</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">pfFH</span><span class="p">:</span>
+<span class="err">　　</span><span class="n">plistString</span> <span class="o">=</span> <span class="n">pfFH</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="err">　　</span><span class="k">if</span> <span class="n">plistString</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;bplist&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err">　　　</span><span class="n">isBinary</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="err">　　</span><span class="k">else</span><span class="p">:</span>
+<span class="err">　　　</span><span class="n">isBinary</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="err">　</span><span class="k">if</span> <span class="n">isBinary</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+<span class="err">　　</span><span class="n">out</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="s">&#39;plutil.pl &quot;{0}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">plistFile</span><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="err">　　</span><span class="k">try</span><span class="p">:</span>
+<span class="err">　　　</span><span class="n">plistTextFile</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;: &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="err">　　　</span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">plistTextFile</span><span class="p">):</span>
+<span class="err">　　　　</span><span class="k">raise</span> <span class="ne">NameError</span><span class="p">,</span> <span class="s">&#39;{0}: no such file&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">plistTextFile</span><span class="p">)</span>
+<span class="err">　　　</span><span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">plistTextFile</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">pfFH</span><span class="p">:</span>
+<span class="err">　　　　</span><span class="n">plistString</span> <span class="o">=</span> <span class="n">pfFH</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="err">　　</span><span class="k">finally</span><span class="p">:</span>
+<span class="err">　　　</span><span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">plistTextFile</span><span class="p">)</span>
+<span class="err">　</span><span class="n">plistData</span> <span class="o">=</span> <span class="n">plib</span><span class="o">.</span><span class="n">readPlistFromString</span><span class="p">(</span><span class="n">plistString</span><span class="p">)</span>
+<span class="err">　</span><span class="k">return</span> <span class="n">plistData</span><span class="p">,</span> <span class="n">isBinary</span>
+
+<span class="k">def</span> <span class="nf">switchMode</span><span class="p">(</span><span class="n">plistObj</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cap</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<span class="err">　</span><span class="k">if</span> <span class="n">mode</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+<span class="err">　　</span><span class="n">plistObj</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;UIBackgroundModes&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="err">　　</span><span class="n">plistObj</span><span class="p">[</span><span class="s">&#39;UIApplicationExitsOnSuspend&#39;</span><span class="p">]</span><span class="o">=</span><span class="bp">True</span>
+<span class="err">　</span><span class="k">elif</span> <span class="n">mode</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+<span class="err">　　</span><span class="n">plistObj</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;UIBackgroundModes&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="err">　　</span><span class="n">plistObj</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;UIApplicationExitsOnSuspend&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="err">　</span><span class="k">elif</span> <span class="n">mode</span><span class="o">==</span><span class="mi">3</span><span class="p">:</span>
+<span class="err">　　</span><span class="n">plistObj</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;UIApplicationExitsOnSuspend&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="err">　　</span><span class="n">plistObj</span><span class="p">[</span><span class="s">&#39;UIBackgroundModes&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;audio&#39;</span><span class="p">,</span> <span class="s">&#39;continuous&#39;</span><span class="p">,</span> <span class="s">&#39;location&#39;</span><span class="p">,</span> <span class="s">&#39;voip&#39;</span><span class="p">][:</span><span class="n">cap</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">plistFile</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">backup</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cap</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<span class="err">　</span><span class="n">plistData</span><span class="p">,</span> <span class="n">isBinary</span> <span class="o">=</span> <span class="n">parsePlistToString</span><span class="p">(</span><span class="n">plistFile</span><span class="p">)</span>
+<span class="err">　</span><span class="n">switchMode</span><span class="p">(</span><span class="n">plistData</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">cap</span><span class="p">)</span>
+
+<span class="err">　</span><span class="n">tempOutFile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s">&#39;.plist&#39;</span><span class="p">)</span>
+<span class="err">　</span><span class="k">try</span><span class="p">:</span>
+<span class="err">　　</span><span class="n">plib</span><span class="o">.</span><span class="n">writePlist</span><span class="p">(</span><span class="n">plistData</span><span class="p">,</span> <span class="n">tempOutFile</span><span class="p">)</span>
+<span class="err">　　</span><span class="n">tempOutFile</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="err">　　</span><span class="k">if</span> <span class="n">backup</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+<span class="err">　　　</span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;mv -f &quot;{0}&quot; &quot;{1}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">plistFile</span><span class="p">,</span> <span class="n">plistFile</span><span class="o">+</span><span class="s">&#39;.bak&#39;</span><span class="p">))</span>
+<span class="err">　　</span><span class="k">if</span> <span class="n">isBinary</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+<span class="err">　　　</span><span class="n">subp</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s">&#39;plutil.pl &quot;{0}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tempOutFile</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">))</span>
+<span class="err">　　　</span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;mv -f &quot;{0}&quot; &quot;{1}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nameAppend</span><span class="p">(</span><span class="n">tempOutFile</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&#39;.binary&#39;</span><span class="p">),</span> <span class="n">plistFile</span><span class="p">))</span>
+<span class="err">　　</span><span class="k">else</span><span class="p">:</span>
+<span class="err">　　　</span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;cp &quot;{0}&quot; &quot;{1}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tempOutFile</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">plistFile</span><span class="p">))</span>
+<span class="err">　</span><span class="k">finally</span><span class="p">:</span>
+<span class="err">　　</span><span class="n">tempOutFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="err">　</span><span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">ArgumentParser</span>
+<span class="err">　</span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="err">　</span><span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="err">　</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;PLISTFILE&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;plist file&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="err">　</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-b&#39;</span><span class="p">,</span> <span class="s">&#39;--backup&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;backup original plist file&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;backup&#39;</span><span class="p">)</span>
+<span class="err">　</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-m&#39;</span><span class="p">,</span> <span class="s">&#39;--mode&#39;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;mode&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;choose one of three background modes&#39;</span><span class="p">)</span>
+<span class="err">　</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="s">&#39;--capacity&#39;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;cap&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;set how many features a app it will have if running background&#39;</span><span class="p">)</span>
+<span class="err">　</span><span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+<span class="err">　</span><span class="k">for</span> <span class="n">plistfile</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">PLISTFILE</span><span class="p">:</span>
+<span class="err">　　</span><span class="n">main</span><span class="p">(</span><span class="n">plistFile</span><span class="o">=</span><span class="n">plistfile</span><span class="p">,</span> <span class="n">backup</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">backup</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">cap</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">cap</span><span class="p">)</span>
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

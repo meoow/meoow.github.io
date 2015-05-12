@@ -21,31 +21,414 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/macxia-qing-liang-ji-mian-fei-fang-huo-qiang-tcpblock.html">Mac下轻量级免费防火墙 TCPBlock</a></h1>
+                    <h1 class="entry-title"><a href="/chu-li-cuewen-jian-bing-zhuan-huan-chu-mp3wen-jian.html">处理cue文件并转换出mp3文件</a></h1>
 <footer class="post-info">
         <span>Tue 12 May 2015</span>
 <span>| tags: <a href="/tag/.html"></a></span>
-</footer><!-- /.post-info --><p>系统偏好设置里的防火墙只能拦截incoming链接</p>
-<p>系统自带的PF防火墙配合icefloor或pflist这样的图形前端也只能实现基于地址规则的outcoming链接</p>
-<p>而可以根据不同应用程序定制拦截规则的Little Snitch 或 Hands Off 都是商业软件</p>
-<p>最近发现了这个集两类防火墙之所长的轻量级免费防火墙 —— TCPBlock</p>
-<p>这个使用的是自己的内核模块来实现的匹配/拦截，没有用到PF，所以即使你用到了PF的其他功能，同时使用也应该不会有冲突</p>
-<p><img alt="tcpblock" src="/img/tcpblock.png" /></p>
-<p>ystem Preferences里会有设置选项</p>
-<p>规则是这样，以斜线作为分割(/)，</p>
-<p>第一例是要拦截的程序名称，可以通过按加号选取，星号表示拦截所有程序（如果后面配置具体IP的话就相当于PF）</p>
-<p>第二列是要拦截的地址，如果用星号表示拦截该软件的所有网络连接，因为已经用斜线作为分割了，所以显然没法再用斜线设置变长子网了，设置网段只能用-或*来设置</p>
-<p>（例如 192.168.0.16/28  要写成 192.168.0.16-31<br />
-   192.168.1.0/24 要写成 192.168.1.*<br />
-）</p>
-<p>第三列是要拦截的端口号，一般来说对于outcoming拦截没必要设置具体端口，直接用星号就可以了。</p>
-<p>后面的四、五列是可选项，可以给出程序的hash和路径，因为mac的内核识别程序名只截取前16个字符，因此从内核角度不排除会有不同程序“重名”问题，而用这个可选项来确定唯一性。</p>
-<p>该软件的官网在wordpress，所以你懂得，因此我还是上传到百毒盘上吧</p>
-<p>http://pan.baidu.com/s/1bnF1duv</p>                </article>
+</footer><!-- /.post-info --><p>例如cue和wav文件，用这个解析cue文件转换除独立的mp3文件, 并写上id3 tag。</p>
+<h2>to mp3:</h2>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python2.7</span>
+
+<span class="kn">import</span> <span class="nn">subprocess</span> <span class="kn">as</span> <span class="nn">subp</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">basename</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">album</span><span class="o">=</span><span class="s">&#39;&#39;</span>
+<span class="n">alb_artist</span><span class="o">=</span><span class="s">&#39;&#39;</span>
+<span class="n">codec</span> <span class="o">=</span> <span class="s">&#39;libmp3lame&#39;</span>
+<span class="n">ffmpeg_exec</span> <span class="o">=</span> <span class="s">&#39;ffmpeg&#39;</span>
+<span class="n">encodingList</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span> <span class="s">&#39;shift-jis&#39;</span><span class="p">,</span> <span class="s">&#39;cp936&#39;</span><span class="p">)</span>
+
+<span class="n">filecontent</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">enc</span> <span class="ow">in</span> <span class="n">encodingList</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">filecontent</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">encoding</span> <span class="o">=</span> <span class="n">enc</span>
+        <span class="k">break</span>
+    <span class="k">except</span> <span class="ne">UnicodeDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">enc</span> <span class="o">==</span> <span class="n">encodingList</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">e</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;FILE&quot;</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;TRACK&#39;</span><span class="p">:</span>
+        <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">({})</span>
+        <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;TITLE&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">album</span> <span class="o">=</span>  <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;INDEX&#39;</span> <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;01&#39;</span><span class="p">:</span>
+        <span class="n">timea</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">timea</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">timea</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+            <span class="n">timea</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">timea</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="mi">60</span><span class="p">))</span>
+            <span class="n">timea</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">timea</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">%</span><span class="mi">60</span><span class="p">)</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="s">&#39;{0}.{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">timea</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">timea</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">times</span>
+    <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;PERFORMER&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;artist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">alb_artist</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">records</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">j</span><span class="p">[</span><span class="s">&#39;stop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">records</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;start&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">tmpname</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">tmpname</span><span class="p">):</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">tmpname</span>
+        <span class="k">del</span> <span class="n">tmpname</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;.ape&#39;</span><span class="p">,</span> <span class="s">&#39;.flac&#39;</span><span class="p">,</span> <span class="s">&#39;.wav&#39;</span><span class="p">,</span> <span class="s">&#39;.mp3&#39;</span><span class="p">):</span>
+            <span class="n">tmpname</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ext</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">tmpname</span><span class="p">):</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">tmpname</span>
+                <span class="k">break</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;Can&#39;t not find file: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+<span class="n">fstat</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">atime</span> <span class="o">=</span> <span class="n">fstat</span><span class="o">.</span><span class="n">st_atime</span>
+<span class="n">mtime</span> <span class="o">=</span> <span class="n">fstat</span><span class="o">.</span><span class="n">st_mtime</span>
+
+<span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;stop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;0&#39;</span>
+<span class="n">tmpfile</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span><span class="mi">90000</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;.mp3&#39;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="n">ffmpeg_exec</span><span class="p">,</span> <span class="s">&#39;-hide_banner&#39;</span><span class="p">,</span> <span class="s">&#39;-y&#39;</span><span class="p">,</span> <span class="s">&#39;-i&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> 
+        <span class="s">&#39;-acodec&#39;</span><span class="p">,</span> <span class="n">codec</span><span class="p">,</span> <span class="s">&#39;-q:a&#39;</span><span class="p">,</span> <span class="s">&#39;0&#39;</span><span class="p">,</span> <span class="s">&#39;-abr&#39;</span><span class="p">,</span> <span class="s">&#39;0&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-compression_level&#39;</span><span class="p">,</span> <span class="s">&#39;0&#39;</span><span class="p">,</span> <span class="n">tmpfile</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="s">&#39;Converting failed.&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">]</span> <span class="o">+</span><span class="s">&#39; - &#39;</span><span class="o">+</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&#39;.mp3&#39;</span>
+        <span class="n">commandline</span> <span class="o">=</span> <span class="p">[</span><span class="n">ffmpeg_exec</span><span class="p">,</span> <span class="s">&#39;-hide_banner&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-y&#39;</span><span class="p">,</span> <span class="s">&#39;-i&#39;</span><span class="p">,</span> <span class="n">tmpfile</span><span class="p">,</span>
+        <span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="s">&#39;copy&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-ss&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">],</span> <span class="s">&#39;-to&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;stop&#39;</span><span class="p">],</span>
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;title={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">]),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;artist={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;artist&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)),</span>
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;performer={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;artist&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)),</span>
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;album={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">album</span><span class="p">),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">&#39;track={0}/{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;album_artist={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">alb_artist</span><span class="p">),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;composer={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">alb_artist</span><span class="p">),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">&#39;encoder=Meow&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-id3v2_version&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">,</span> <span class="s">&#39;-write_id3v1&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> 
+        <span class="n">output</span><span class="p">]</span>
+        <span class="n">subp</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">commandline</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">utime</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="p">(</span><span class="n">atime</span><span class="p">,</span> <span class="n">mtime</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>to m4a:</h2>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python2.7</span>
+
+<span class="kn">import</span> <span class="nn">subprocess</span> <span class="kn">as</span> <span class="nn">subp</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">splitext</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">mediainfo</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">remPtn</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">u&#39;^(</span><span class="se">\ufeff</span><span class="s">)?REM &#39;</span><span class="p">)</span>
+
+<span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">album</span><span class="o">=</span><span class="s">&#39;&#39;</span>
+<span class="n">alb_artist</span><span class="o">=</span><span class="s">&#39;&#39;</span>
+<span class="n">genre</span><span class="o">=</span><span class="s">&#39;&#39;</span>
+<span class="n">year</span><span class="o">=</span><span class="s">&#39;&#39;</span>
+<span class="n">codec</span> <span class="o">=</span> <span class="s">&#39;libfdk_aac&#39;</span>
+<span class="n">ffmpeg_exec</span> <span class="o">=</span> <span class="s">&#39;ffmpeg&#39;</span>
+<span class="n">encodingList</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span><span class="s">&#39;euc-kr&#39;</span><span class="p">,</span> <span class="s">&#39;shift-jis&#39;</span><span class="p">,</span> <span class="s">&#39;cp936&#39;</span><span class="p">,</span> <span class="s">&#39;big5&#39;</span><span class="p">)</span>
+
+<span class="n">filecontent</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">enc</span> <span class="ow">in</span> <span class="n">encodingList</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">filecontent</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">encoding</span> <span class="o">=</span> <span class="n">enc</span>
+        <span class="k">break</span>
+    <span class="k">except</span> <span class="ne">UnicodeDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">enc</span> <span class="o">==</span> <span class="n">encodingList</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">e</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">remPtn</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">remPtn</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+
+        <span class="c"># if a[0] == &quot;REM&quot; and len(a) &gt; 2:</span>
+        <span class="c">#   a.pop(0)</span>
+
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;FILE&quot;</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;TITLE&#39;</span><span class="p">:</span>
+            <span class="n">album</span> <span class="o">=</span>  <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;PERFORMER&#39;</span><span class="p">:</span>
+            <span class="n">alb_artist</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;GENRE&#39;</span><span class="p">:</span>
+            <span class="n">genre</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;DATE&#39;</span><span class="p">:</span>
+            <span class="n">year</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;TRACK&#39;</span><span class="p">:</span>
+            <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">({})</span>
+            <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;TRACK&#39;</span><span class="p">:</span>
+            <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">({})</span>
+            <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;TITLE&#39;</span><span class="p">:</span>
+            <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;INDEX&#39;</span> <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;01&#39;</span><span class="p">:</span>
+            <span class="n">timea</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">timea</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">timea</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+                <span class="n">timea</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">timea</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="mi">60</span><span class="p">))</span>
+                <span class="n">timea</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">timea</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">%</span><span class="mi">60</span><span class="p">)</span>
+            <span class="n">times</span> <span class="o">=</span> <span class="s">&#39;{0}.{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">timea</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">timea</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">times</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;PERFORMER&#39;</span><span class="p">:</span>
+            <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;artist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+
+<span class="c"># print genre</span>
+<span class="c"># print year</span>
+<span class="c"># raise SystemExit</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">records</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">j</span><span class="p">[</span><span class="s">&#39;stop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">records</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;start&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;.*&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">splitext</span><span class="p">(</span><span class="n">i</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;.ape&#39;</span><span class="p">,</span> <span class="s">&#39;.flac&#39;</span><span class="p">,</span> <span class="s">&#39;.wav&#39;</span><span class="p">,</span> <span class="s">&#39;.mp3&#39;</span><span class="p">):</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="k">break</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;Can&#39;t not find file: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+<span class="n">fstat</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">atime</span> <span class="o">=</span> <span class="n">fstat</span><span class="o">.</span><span class="n">st_atime</span>
+<span class="n">mtime</span> <span class="o">=</span> <span class="n">fstat</span><span class="o">.</span><span class="n">st_mtime</span>
+
+<span class="c">#records[-1][&#39;stop&#39;] = &#39;0&#39;</span>
+<span class="n">tmpfile</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span><span class="mi">90000</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;.m4a&#39;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="n">ffmpeg_exec</span><span class="p">,</span> <span class="s">&#39;-hide_banner&#39;</span><span class="p">,</span> <span class="s">&#39;-y&#39;</span><span class="p">,</span> <span class="s">&#39;-i&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> 
+        <span class="s">&#39;-acodec&#39;</span><span class="p">,</span> <span class="n">codec</span><span class="p">,</span> <span class="s">&#39;-b:a&#39;</span><span class="p">,</span> <span class="s">&#39;320k&#39;</span><span class="p">,</span><span class="s">&#39;-profile:a&#39;</span><span class="p">,</span> <span class="s">&#39;aac_low&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-cutoff&#39;</span><span class="p">,</span> <span class="s">&#39;20000&#39;</span><span class="p">,</span> <span class="s">&#39;-movflags&#39;</span><span class="p">,</span><span class="s">&#39;faststart&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-f&#39;</span><span class="p">,</span><span class="s">&#39;ipod&#39;</span><span class="p">,</span><span class="n">tmpfile</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="s">&#39;Converting failed.&#39;</span><span class="p">)</span>
+
+    <span class="n">tmpinfo</span> <span class="o">=</span> <span class="n">mediainfo</span><span class="o">.</span><span class="n">mediainfo</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">)</span>
+
+    <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;stop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmpinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;duration&#39;</span><span class="p">,</span> <span class="s">&#39;0&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">]</span> <span class="o">+</span><span class="s">&#39; - &#39;</span><span class="o">+</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&#39;.m4a&#39;</span>
+        <span class="n">commandline</span> <span class="o">=</span> <span class="p">[</span><span class="n">ffmpeg_exec</span><span class="p">,</span> <span class="s">&#39;-hide_banner&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-y&#39;</span><span class="p">,</span> <span class="s">&#39;-i&#39;</span><span class="p">,</span> <span class="n">tmpfile</span><span class="p">,</span>
+        <span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="s">&#39;copy&#39;</span><span class="p">,</span> <span class="s">&#39;-movflags&#39;</span><span class="p">,</span><span class="s">&#39;faststart&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-ss&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">],</span> <span class="s">&#39;-to&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;stop&#39;</span><span class="p">],</span>
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;title={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">]),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;date={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="p">),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;genre={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">genre</span><span class="p">),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;artist={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;artist&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)),</span>
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;album_artist={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;artist&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)),</span>
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;performer={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;artist&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)),</span>
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;album={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">album</span><span class="p">),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">&#39;track={0}/{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;album_artist={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">alb_artist</span><span class="p">),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;composer={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">alb_artist</span><span class="p">),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">&#39;encodedby=Meow&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">&#39;tool=ffmpeg&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">&#39;type=music&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-f&#39;</span><span class="p">,</span> <span class="s">&#39;ipod&#39;</span><span class="p">,</span> 
+        <span class="n">output</span><span class="p">]</span>
+        <span class="n">subp</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">commandline</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">utime</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="p">(</span><span class="n">atime</span><span class="p">,</span> <span class="n">mtime</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>to flac</h2>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python2.7</span>
+
+<span class="kn">import</span> <span class="nn">subprocess</span> <span class="kn">as</span> <span class="nn">subp</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">basename</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">album</span><span class="o">=</span><span class="s">&#39;&#39;</span>
+<span class="n">alb_artist</span><span class="o">=</span><span class="s">&#39;&#39;</span>
+<span class="n">codec</span> <span class="o">=</span> <span class="s">&#39;flac&#39;</span>
+<span class="n">ffmpeg_exec</span> <span class="o">=</span> <span class="s">&#39;ffmpeg&#39;</span>
+<span class="n">encodingList</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span> <span class="s">&#39;shift-jis&#39;</span><span class="p">,</span> <span class="s">&#39;cp936&#39;</span><span class="p">)</span>
+
+<span class="n">filecontent</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">enc</span> <span class="ow">in</span> <span class="n">encodingList</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">filecontent</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">enc</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">encoding</span> <span class="o">=</span> <span class="n">enc</span>
+        <span class="k">break</span>
+    <span class="k">except</span> <span class="ne">UnicodeDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">enc</span> <span class="o">==</span> <span class="n">encodingList</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">e</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;FILE&quot;</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;TRACK&#39;</span><span class="p">:</span>
+        <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">({})</span>
+        <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;TITLE&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">album</span> <span class="o">=</span>  <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;INDEX&#39;</span> <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;01&#39;</span><span class="p">:</span>
+        <span class="n">timea</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">timea</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">timea</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+            <span class="n">timea</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">timea</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="mi">60</span><span class="p">))</span>
+            <span class="n">timea</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">timea</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">%</span><span class="mi">60</span><span class="p">)</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="s">&#39;{0}.{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">timea</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">timea</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">times</span>
+    <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;PERFORMER&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;artist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">alb_artist</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&quot;&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">records</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">j</span><span class="p">[</span><span class="s">&#39;stop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">records</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;start&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">tmpname</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">tmpname</span><span class="p">):</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">tmpname</span>
+        <span class="k">del</span> <span class="n">tmpname</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;.ape&#39;</span><span class="p">,</span> <span class="s">&#39;.flac&#39;</span><span class="p">,</span> <span class="s">&#39;.wav&#39;</span><span class="p">,</span> <span class="s">&#39;.mp3&#39;</span><span class="p">):</span>
+            <span class="n">tmpname</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ext</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">tmpname</span><span class="p">):</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">tmpname</span>
+                <span class="k">break</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;Can&#39;t not find file: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+<span class="n">fstat</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">atime</span> <span class="o">=</span> <span class="n">fstat</span><span class="o">.</span><span class="n">st_atime</span>
+<span class="n">mtime</span> <span class="o">=</span> <span class="n">fstat</span><span class="o">.</span><span class="n">st_mtime</span>
+
+<span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;stop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;0&#39;</span>
+<span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;.flac&#39;</span><span class="p">):</span>
+    <span class="n">tmpfile</span> <span class="o">=</span> <span class="n">filename</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">tmpfile</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span><span class="mi">90000</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;.flac&#39;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">filename</span> <span class="o">!=</span> <span class="n">tmpfile</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">subp</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="n">ffmpeg_exec</span><span class="p">,</span> <span class="s">&#39;-hide_banner&#39;</span><span class="p">,</span> <span class="s">&#39;-y&#39;</span><span class="p">,</span> <span class="s">&#39;-i&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> 
+            <span class="s">&#39;-acodec&#39;</span><span class="p">,</span> <span class="n">codec</span><span class="p">,</span><span class="s">&#39;-compression_level&#39;</span><span class="p">,</span><span class="s">&#39;12&#39;</span><span class="p">,</span><span class="s">&#39;-f&#39;</span><span class="p">,</span><span class="s">&#39;flac&#39;</span><span class="p">,</span><span class="n">tmpfile</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="s">&#39;Converting failed.&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">]</span> <span class="o">+</span><span class="s">&#39; - &#39;</span><span class="o">+</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&#39;.flac&#39;</span>
+        <span class="n">commandline</span> <span class="o">=</span> <span class="p">[</span><span class="n">ffmpeg_exec</span><span class="p">,</span> <span class="s">&#39;-hide_banner&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-y&#39;</span><span class="p">,</span> <span class="s">&#39;-i&#39;</span><span class="p">,</span> <span class="n">tmpfile</span><span class="p">,</span>
+        <span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="s">&#39;copy&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-ss&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">],</span> <span class="s">&#39;-to&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;stop&#39;</span><span class="p">],</span>
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;title={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">]),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;artist={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;artist&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)),</span>
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;performer={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;artist&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)),</span>
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;album={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">album</span><span class="p">),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">&#39;track={0}/{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;album_artist={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">alb_artist</span><span class="p">),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">u&#39;composer={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">alb_artist</span><span class="p">),</span> 
+        <span class="s">&#39;-metadata&#39;</span><span class="p">,</span> <span class="s">&#39;encoder=Meow&#39;</span><span class="p">,</span> 
+        <span class="s">&#39;-write_id3v1&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> 
+        <span class="n">output</span><span class="p">]</span>
+        <span class="n">subp</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">commandline</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">utime</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="p">(</span><span class="n">atime</span><span class="p">,</span> <span class="n">mtime</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
                     <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/macxia-qing-liang-ji-mian-fei-fang-huo-qiang-tcpblock.html" rel="bookmark"
+                           title="Permalink to Mac下轻量级免费防火墙 TCPBlock">Mac下轻量级免费防火墙 TCPBlock</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Tue 12 May 2015</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/macxia-qing-liang-ji-mian-fei-fang-huo-qiang-tcpblock.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -178,6 +561,81 @@
 <span>| tags: <a href="/tag/uefi.html">uefi</a><a href="/tag/grub2.html">grub2</a><a href="/tag/slax.html">slax</a><a href="/tag/linux.html">linux</a></span>
 </footer><!-- /.post-info -->                
                 <a class="readmore" href="/uefixi-tong-shi-yong-grub2yin-dao-slaxde-fang-fa-jie-shao.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/dylibbundler-mac-osxshang-de-ruan-jian-bian-xi-hua-gong-ju.html" rel="bookmark"
+                           title="Permalink to dylibbundler - Mac OSX上的软件便携化工具">dylibbundler - Mac OSX上的软件便携化工具</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/os-x.html">OS X</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/dylibbundler-mac-osxshang-de-ruan-jian-bian-xi-hua-gong-ju.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/qie-huan-iosxia-appde-hou-tai-yun-xing-mo-shi.html" rel="bookmark"
+                           title="Permalink to 切换IOS下APP的后台运行模式">切换IOS下APP的后台运行模式</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/ios.html">iOS</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/qie-huan-iosxia-appde-hou-tai-yun-xing-mo-shi.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/fen-xiang-yi-xia-jie-jue-bu-neng-fang-wen-gong-xiang-mu-lu-de-fang-fa.html" rel="bookmark"
+                           title="Permalink to 分享一下解决不能访问共享目录的方法">分享一下解决不能访问共享目录的方法</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/linux.html">Linux</a><a href="/tag/virtualbox.html">VirtualBox</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/fen-xiang-yi-xia-jie-jue-bu-neng-fang-wen-gong-xiang-mu-lu-de-fang-fa.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/osxfang-zhi-ruan-jian-lian-wang-de-fang-fa-jian-jie.html" rel="bookmark"
+                           title="Permalink to OSX防止软件联网的方法简介">OSX防止软件联网的方法简介</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/os-x.html">OS X</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/osxfang-zhi-ruan-jian-lian-wang-de-fang-fa-jian-jie.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/wang-ye-zi-yuan-qian-ru-html.html" rel="bookmark"
+                           title="Permalink to 网页资源嵌入html">网页资源嵌入html</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/wang-ye-zi-yuan-qian-ru-html.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 

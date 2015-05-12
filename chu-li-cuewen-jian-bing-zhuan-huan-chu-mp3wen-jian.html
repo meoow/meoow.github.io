@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>meoow - meoow</title>
+        <title>处理cue文件并转换出mp3文件</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -14,18 +14,23 @@
         <header id="banner" class="body">
                 <h1><a href="/">meoow </a></h1>
                 <nav><ul>
-                    <li><a href="/category/article.html">Article</a></li>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
                 </ul>
                 </nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/chu-li-cuewen-jian-bing-zhuan-huan-chu-mp3wen-jian.html" rel="bookmark"
+           title="Permalink to 处理cue文件并转换出mp3文件">处理cue文件并转换出mp3文件</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/chu-li-cuewen-jian-bing-zhuan-huan-chu-mp3wen-jian.html">处理cue文件并转换出mp3文件</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <span>Tue 12 May 2015</span>
 <span>| tags: <a href="/tag/.html"></a></span>
-</footer><!-- /.post-info --><p>例如cue和wav文件，用这个解析cue文件转换除独立的mp3文件, 并写上id3 tag。</p>
+</footer><!-- /.post-info -->      <p>例如cue和wav文件，用这个解析cue文件转换除独立的mp3文件, 并写上id3 tag。</p>
 <h2>to mp3:</h2>
 <div class="highlight"><pre><span class="c">#!/usr/bin/env python2.7</span>
 
@@ -409,285 +414,11 @@
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <ol id="posts-list" class="hfeed">
+</pre></div>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/macxia-qing-liang-ji-mian-fei-fang-huo-qiang-tcpblock.html" rel="bookmark"
-                           title="Permalink to Mac下轻量级免费防火墙 TCPBlock">Mac下轻量级免费防火墙 TCPBlock</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Tue 12 May 2015</span>
-<span>| tags: <a href="/tag/.html"></a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/macxia-qing-liang-ji-mian-fei-fang-huo-qiang-tcpblock.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/wiznote-2117-for-raspbian.html" rel="bookmark"
-                           title="Permalink to WizNote 2.1.17 for Raspbian">WizNote 2.1.17 for Raspbian</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Tue 12 May 2015</span>
-<span>| tags: <a href="/tag/.html"></a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/wiznote-2117-for-raspbian.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/struct-reflect.html" rel="bookmark"
-                           title="Permalink to struct reflect">struct reflect</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Wed 25 June 2014</span>
-<span>| tags: <a href="/tag/go.html">go</a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/struct-reflect.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/c-combination.html" rel="bookmark"
-                           title="Permalink to C combination">C combination</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Wed 25 June 2014</span>
-<span>| tags: <a href="/tag/c.html">C</a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/c-combination.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/combination.html" rel="bookmark"
-                           title="Permalink to Combination">Combination</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Tue 24 June 2014</span>
-<span>| tags: <a href="/tag/go.html">go</a></span>
-</footer><!-- /.post-info -->                <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
-
-<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
-
-<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">n</span> <span class="p">=</span> <span class="mi">6</span>
-    <span class="kd">var</span> <span class="nx">k</span> <span class="p">=</span> <span class="mi">3</span>
-    <span class="nx">ar</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span>
-    <span class="nx">comb</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">ar</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">damn</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="kd">var</span> <span class="nx">count</span> <span class="p">=</span> <span class="mi">0</span>
-
-<span class="kd">func</span> <span class="nx">comb</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">k</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">arr</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">count</span><span class="o">++</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;--&quot;</span><span class="p">,</span> <span class="nx">count</span><span class="p">,</span> <span class="s">&quot;--&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="nx">k</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span> <span class="p">{</span>
-        <span class="nx">arr</span><span class="p">[</span><span class="nx">k</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">i</span>
-        <span class="k">if</span> <span class="nx">k</span> <span class="p">&gt;</span> <span class="mi">1 ...</span></pre></div>
-                <a class="readmore" href="/combination.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/multi-upload.html" rel="bookmark"
-                           title="Permalink to Multi Upload">Multi Upload</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Tue 24 June 2014</span>
-<span>| tags: <a href="/tag/go.html">go</a></span>
-</footer><!-- /.post-info -->                <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
-
-<span class="kn">import</span> <span class="p">(</span>
-    <span class="s">&quot;io&quot;</span>
-    <span class="s">&quot;log&quot;</span>
-    <span class="s">&quot;mime/multipart&quot;</span>
-    <span class="s">&quot;net/http&quot;</span>
-    <span class="s">&quot;os&quot;</span>
-    <span class="s">&quot;path/filepath&quot;</span>
-    <span class="s">&quot;runtime&quot;</span>
-
-    <span class="s">&quot;github.com/cheggaaa/pb&quot;</span>
-<span class="p">)</span>
-
-<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="p">{</span>
-        <span class="nx">log</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Usage: pipeUp &lt;filename&gt;\n&quot;</span><span class="p">)</span>
-        <span class="nx">os</span><span class="p">.</span><span class="nx">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="p">}</span>
-
-    <span class="nx">input</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-    <span class="k">defer</span> <span class="nx">input</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
-
-    <span class="nx">stat</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">Stat</span><span class="p">()</span>
-    <span class="nx">check ...</span></pre></div>
-                <a class="readmore" href="/multi-upload.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/uefixi-tong-shi-yong-grub2yin-dao-slaxde-fang-fa-jie-shao.html" rel="bookmark"
-                           title="Permalink to UEFI系统使用GRUB2引导Slax的方法介绍">UEFI系统使用GRUB2引导Slax的方法介绍</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 16 June 2014</span>
-<span>| tags: <a href="/tag/uefi.html">uefi</a><a href="/tag/grub2.html">grub2</a><a href="/tag/slax.html">slax</a><a href="/tag/linux.html">linux</a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/uefixi-tong-shi-yong-grub2yin-dao-slaxde-fang-fa-jie-shao.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/dylibbundler-mac-osxshang-de-ruan-jian-bian-xi-hua-gong-ju.html" rel="bookmark"
-                           title="Permalink to dylibbundler - Mac OSX上的软件便携化工具">dylibbundler - Mac OSX上的软件便携化工具</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 16 June 2014</span>
-<span>| tags: <a href="/tag/os-x.html">OS X</a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/dylibbundler-mac-osxshang-de-ruan-jian-bian-xi-hua-gong-ju.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/qie-huan-iosxia-appde-hou-tai-yun-xing-mo-shi.html" rel="bookmark"
-                           title="Permalink to 切换IOS下APP的后台运行模式">切换IOS下APP的后台运行模式</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 16 June 2014</span>
-<span>| tags: <a href="/tag/ios.html">iOS</a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/qie-huan-iosxia-appde-hou-tai-yun-xing-mo-shi.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/fen-xiang-yi-xia-jie-jue-bu-neng-fang-wen-gong-xiang-mu-lu-de-fang-fa.html" rel="bookmark"
-                           title="Permalink to 分享一下解决不能访问共享目录的方法">分享一下解决不能访问共享目录的方法</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 16 June 2014</span>
-<span>| tags: <a href="/tag/linux.html">Linux</a><a href="/tag/virtualbox.html">VirtualBox</a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/fen-xiang-yi-xia-jie-jue-bu-neng-fang-wen-gong-xiang-mu-lu-de-fang-fa.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/osxfang-zhi-ruan-jian-lian-wang-de-fang-fa-jian-jie.html" rel="bookmark"
-                           title="Permalink to OSX防止软件联网的方法简介">OSX防止软件联网的方法简介</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 16 June 2014</span>
-<span>| tags: <a href="/tag/os-x.html">OS X</a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/osxfang-zhi-ruan-jian-lian-wang-de-fang-fa-jian-jie.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/wang-ye-zi-yuan-qian-ru-html.html" rel="bookmark"
-                           title="Permalink to 网页资源嵌入html">网页资源嵌入html</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 16 June 2014</span>
-<span>| tags: <a href="/tag/.html"></a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/wang-ye-zi-yuan-qian-ru-html.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/ru-he-bu-an-zhuang-flashcheng-xu-lai-an-zhuang-flashcha-jian.html" rel="bookmark"
-                           title="Permalink to 如何不“安装”Flash程序来“安装”Flash插件">如何不“安装”Flash程序来“安装”Flash插件</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 16 June 2014</span>
-<span>| tags: <a href="/tag/os-x.html">OS X</a><a href="/tag/flash.html">Flash</a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/ru-he-bu-an-zhuang-flashcheng-xu-lai-an-zhuang-flashcha-jian.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/jian-yi-de-wen-zi-zhuan-tu-pian-gong-ju.html" rel="bookmark"
-                           title="Permalink to 简易的文字转图片工具">简易的文字转图片工具</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 16 June 2014</span>
-<span>| tags: <a href="/tag/.html"></a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/jian-yi-de-wen-zi-zhuan-tu-pian-gong-ju.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/zhi-zuo-fa-bu-bian-xi-fa-xing-ban-du-li-ruan-jian-gang-ling.html" rel="bookmark"
-                           title="Permalink to 制作,发布便携(发行版独立)软件纲领">制作,发布便携(发行版独立)软件纲领</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 16 June 2014</span>
-<span>| tags: <a href="/tag/.html"></a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/zhi-zuo-fa-bu-bian-xi-fa-xing-ban-du-li-ruan-jian-gang-ling.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-            </ol><!-- /#posts-list -->
-<p class="paginator">
-    Page 1 / 1
-</p>
-            </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
         </section><!-- /#extras -->
 

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>dylibbundler - Mac OSX上的软件便携化工具</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/dylibbundler-mac-osxshang-de-ruan-jian-bian-xi-hua-gong-ju.html" rel="bookmark"
+           title="Permalink to dylibbundler - Mac OSX上的软件便携化工具">dylibbundler - Mac OSX上的软件便携化工具</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/os-x.html">OS X</a></span>
+</footer><!-- /.post-info -->      <p>例如，PSP模拟器PPSSPP的OSX版本在官方网站上提供了预编译的版本，但是它依赖SDL库需要自己提供，是用otool -L可以发现其所依赖的sdl库是用绝对路径写死了位置的也就是说必须是homebrew安装的版本，而不是rpath让系统找framework。
+但是事实上完全是可以通过一定的“hack”手段把sdl库集成到app bundle中再发布，这样就连sdl库都省得自己安装了。
+手动的办法就是将sdl的dylib文件拷贝到PPSSPP执行文件的统一目录下，然后用install_name_tool来修改PPSSPP加载SDL库的查询路径。例如</p>
+<div class="highlight"><pre>install_name_tool -change /usr/local/lib/libsdl.dylib @executable_path/libsdl.dylib PPSSPP
+</pre></div>
+
+
+<p>这里的路径是我编的，要看实际情况修改。效果就是查询加载sdl库的位置有原来的/usr/local/lib/改到了@executable_path，而这个@executable_path就是执行程序的所在路径。
+@executable_path的特点是始终是用执行程序的路径
+例如这样的关系</p>
+<blockquote>
+<p>executable_bin -&gt; A.dylib -&gt; B.dylib</p>
+</blockquote>
+<p>那么在A.dylib或B.dylib中是用@executable_path的话，始终是executable_bin的路径，而跟A.dylib或B.dylib的实际路径没有关系。
+而像Linux的执行文件或so的RPATH则始终是该文件自己的路径。</p>
+<p>这里大家应该想到了，手动修改的话如果依赖关系十分简单到还可以，如果依赖很多dylib，并且dylib还继续依赖dylib的话，就比较麻烦了。<br />
+dylibbundler就是解决这个问题的，它会根据执行文件的依赖关系将所有dylib拷贝到你指定了路径，并相应的修改库的查询位置，而且套圆环的关系也一并处理。并且会省略系统自带的库。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

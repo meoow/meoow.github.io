@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>meoow - VirtualBox</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/fen-xiang-yi-xia-jie-jue-bu-neng-fang-wen-gong-xiang-mu-lu-de-fang-fa.html">分享一下解决不能访问共享目录的方法</a></h1>
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/linux.html">Linux</a><a href="/tag/virtualbox.html">VirtualBox</a></span>
+</footer><!-- /.post-info --><p>如果是设置的自动挂载的话，默认是用的是vboxsf用户组，所以如果你不是用root的话是访问不了的，所以要把自己添加到vboxsf用户组里，
+方法(root权限)：
+gpasswd -a &lt;你的用户名&gt; vboxsf
+然后重新登录就可以了。</p>
+<p>如果是手动挂载的话，我是定义了这样的function：</p>
+<div class="highlight"><pre><span class="c">#mount virtualbox shared folder</span>
+vbmount <span class="o">()</span> <span class="o">{</span>  <span class="c">#{{{</span>
+    <span class="nb">local </span><span class="nv">d</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+    <span class="nb">local </span><span class="nv">GID</span><span class="o">=</span><span class="k">$(</span>id -g<span class="k">)</span>
+    <span class="k">if</span> <span class="o">[</span> ! -e /media/<span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+        sudo mkdir -p /media/<span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span> <span class="o">||</span> <span class="k">return</span> 1
+    <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;/media/</span><span class="nv">$d</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="k">$(</span>find <span class="s2">&quot;/media/</span><span class="nv">$d</span><span class="s2">&quot;</span> -maxdepth <span class="m">0</span> -type d -empty 2&gt;/dev/null<span class="k">)</span> <span class="o">]]</span><span class="p">;</span><span class="k">then</span>
+        :
+    <span class="k">else</span>
+        <span class="nb">echo </span>Can not mount <span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span> to /media/<span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span> &gt;<span class="p">&amp;</span>2
+        <span class="k">return</span> 1
+    <span class="k">fi</span>
+    sudo mount -t vboxsf <span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span> /media/<span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span> -o <span class="nv">uid</span><span class="o">=</span><span class="si">${</span><span class="nv">UID</span><span class="si">}</span>,gid<span class="o">=</span><span class="si">${</span><span class="nv">GID</span><span class="si">}</span>
+<span class="o">}</span>  <span class="c">#}}}</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span class="c">#mount vmware shared folder</span>
+vmmount <span class="o">()</span> <span class="o">{</span>  <span class="c">#{{{</span>
+    <span class="nb">local </span><span class="nv">d</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+    <span class="nb">local </span><span class="nv">GID</span><span class="o">=</span><span class="k">$(</span>id -g<span class="k">)</span>
+    <span class="k">if</span> <span class="o">[</span> ! -e /media/<span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+        sudo mkdir -p /media/<span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span> <span class="o">||</span> <span class="k">return</span> 1
+    <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;/media/</span><span class="nv">$d</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="k">$(</span>find <span class="s2">&quot;/media/</span><span class="nv">$d</span><span class="s2">&quot;</span> -maxdepth <span class="m">0</span> -type d -empty 2&gt;/dev/null<span class="k">)</span> <span class="o">]]</span><span class="p">;</span><span class="k">then</span>
+        :
+    <span class="k">else</span>
+        <span class="nb">echo </span>Can not mount <span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span> to /media/<span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span> &gt;<span class="p">&amp;</span>2
+        <span class="k">return</span> 1
+    <span class="k">fi</span>
+    sudo mount -t vmhgfs <span class="s2">&quot;.host:/</span><span class="nv">$d</span><span class="s2">&quot;</span> /media/<span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span> -o <span class="nv">uid</span><span class="o">=</span><span class="si">${</span><span class="nv">UID</span><span class="si">}</span>,gid<span class="o">=</span><span class="si">${</span><span class="nv">GID</span><span class="si">}</span>
+<span class="o">}</span>  <span class="c">#}}}</span>
+</pre></div>                </article>
+<p class="paginator">
+    Page 1 / 1
+</p>
+            </aside><!-- /#featured -->
+            </ol><!-- /#posts-list -->
+            </section><!-- /#content -->
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
