@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>meoow</title><link>meoow.github.io/</link><description></description><atom:link href="meoow.github.io/feeds/meoow.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 11 May 2015 00:00:00 +0000</lastBuildDate><item><title>struct reflect</title><link>meoow.github.io/struct-reflect.html</link><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>meoow</title><link>http://meoow.github.io/</link><description></description><atom:link href="http://meoow.github.io/feeds/meoow.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 11 May 2015 00:00:00 +0000</lastBuildDate><item><title>struct reflect</title><link>http://meoow.github.io/struct-reflect.html</link><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="s"&gt;&amp;quot;fmt&amp;quot;&lt;/span&gt;
@@ -18,7 +18,7 @@
         &lt;span class="nx"&gt;fmt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;t&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Field&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;Name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;v&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;FieldByName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;t&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Field&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;Name&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meoow</dc:creator><pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate><guid>tag:,2014-06-25:meoow.github.io/struct-reflect.html</guid><category>go</category></item><item><title>C combination</title><link>meoow.github.io/c-combination.html</link><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meoow</dc:creator><pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate><guid>tag:meoow.github.io,2014-06-25:struct-reflect.html</guid><category>go</category></item><item><title>C combination</title><link>http://meoow.github.io/c-combination.html</link><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
 
 &lt;span class="cm"&gt;/* Prints out a combination like {1, 2} */&lt;/span&gt;
 &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;printc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;comb&lt;/span&gt;&lt;span class="p"&gt;[],&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -79,7 +79,7 @@
 
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meoow</dc:creator><pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate><guid>tag:,2014-06-25:meoow.github.io/c-combination.html</guid><category>C</category></item><item><title>Combination</title><link>meoow.github.io/combination.html</link><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meoow</dc:creator><pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate><guid>tag:meoow.github.io,2014-06-25:c-combination.html</guid><category>C</category></item><item><title>Combination</title><link>http://meoow.github.io/combination.html</link><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;fmt&amp;quot;&lt;/span&gt;
 
@@ -106,7 +106,7 @@
     &lt;span class="p"&gt;}&lt;/span&gt;
     &lt;span class="nx"&gt;count&lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meoow</dc:creator><pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate><guid>tag:,2014-06-24:meoow.github.io/combination.html</guid><category>go</category></item><item><title>Multi Upload</title><link>meoow.github.io/multi-upload.html</link><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meoow</dc:creator><pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate><guid>tag:meoow.github.io,2014-06-24:combination.html</guid><category>go</category></item><item><title>Multi Upload</title><link>http://meoow.github.io/multi-upload.html</link><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="s"&gt;&amp;quot;io&amp;quot;&lt;/span&gt;
@@ -187,7 +187,7 @@
         &lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Fatalf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Fatal from &amp;lt;%s:%d&amp;gt;\nError:%s&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;file&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;line&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meoow</dc:creator><pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate><guid>tag:,2014-06-24:meoow.github.io/multi-upload.html</guid><category>go</category></item><item><title>UEFI系统使用GRUB2引导Slax的方法介绍</title><link>meoow.github.io/uefixi-tong-shi-yong-grub2yin-dao-slaxde-fang-fa-jie-shao.html</link><description>&lt;p&gt;尽管我在Slax吧已经发过了，不过还是在这里再发一遍。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meoow</dc:creator><pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate><guid>tag:meoow.github.io,2014-06-24:multi-upload.html</guid><category>go</category></item><item><title>UEFI系统使用GRUB2引导Slax的方法介绍</title><link>http://meoow.github.io/uefixi-tong-shi-yong-grub2yin-dao-slaxde-fang-fa-jie-shao.html</link><description>&lt;p&gt;尽管我在Slax吧已经发过了，不过还是在这里再发一遍。&lt;/p&gt;
 &lt;p&gt;对于MSDOS（MBR）分区表的移动硬盘，我向来喜欢用GRUB4DOS来引导各种系统，
 不过连最落后的Windows也都早已支持安装在GPT分区表的硬盘了，所以我就像介绍一下UEFI系统下使用GPT分区表的硬盘/U盘引导Slax之类的系统的方法
 引导里面我用的比较熟的也就是GRUB2和GRUB4DOS了，不过既然GRUB4DOS不支持GPT，那重任就落在GRUB2身上了。
@@ -238,4 +238,4 @@ menuentry &amp;quot;Slax (Desktop)&amp;quot; {
 
 
 &lt;p&gt;otx64.efi和建立的grub.cfg都拷贝到GPT分区硬盘的ESP分区的/EFI/boot目录下，或者MBR分区硬盘的第一个FAT32分区的/EFI/boot下。
-开机启动菜单选择对应的EFI启动项即可了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meoow</dc:creator><pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate><guid>tag:,2014-06-16:meoow.github.io/uefixi-tong-shi-yong-grub2yin-dao-slaxde-fang-fa-jie-shao.html</guid><category>uefi</category><category>grub2</category><category>slax</category><category>linux</category></item></channel></rss>
+开机启动菜单选择对应的EFI启动项即可了。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meoow</dc:creator><pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate><guid>tag:meoow.github.io,2014-06-16:uefixi-tong-shi-yong-grub2yin-dao-slaxde-fang-fa-jie-shao.html</guid><category>uefi</category><category>grub2</category><category>slax</category><category>linux</category></item></channel></rss>

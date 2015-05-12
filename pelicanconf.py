@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = u'meoow'
 SITENAME = u'meoow'
-SITEURL = 'meoow.github.io'
+SITEURL = 'http://meoow.github.io'
 
 #TIMEZONE = 'Asia/Beijing'
 
@@ -15,6 +15,7 @@ FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 DEFAULT_CATEGORY = 'Article'
+LOCALE = 'C'
 # Blogroll
 # LINKS =  (('Pelican', 'http://getpelican.com/'),
 #           ('Python.org', 'http://python.org/'),
@@ -29,3 +30,7 @@ DEFAULT_PAGINATION = 20
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+
+STATIC_PATHS = [ 'img' ]
+PYGMENTS_RST_OPTIONS = {'linenos':'table'}
+THEME = '/Volumes/m/fuckingground/__githuber__/pelican-themes/blueidea'
