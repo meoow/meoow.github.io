@@ -21,17 +21,81 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/busybox-w32-rang-ni-de-windowsming-ling-xing-bu-zai-fei-dao-wu-yi-fu-jia.html">busybox-w32 让你的windows命令行不再废到无以复加</a></h1>
+                    <h1 class="entry-title"><a href="/resize-images-in-given-size-using-ffmpeg.html">resize images in given size using ffmpeg</a></h1>
 <footer class="post-info">
         <span>Tue 12 May 2015</span>
-<span>| tags: <a href="/tag/.html"></a></span>
-</footer><!-- /.post-info --><p>很多时候都不得不惊叹Windows的命令行为什么会如此残废，写个简单的批处理都需要各种”迂回“策略，根本没有办法让你用正常思维思考，而那个PowerShell则根本就是脑残的另一种境界。
-好在有人把Busybox移植到了Windows上，总算稍微找到了些许顺手的感觉。
-我用去年的版本的时候还没有编译选项里还没有开启unicode支持，所以中文都用问号表示，而昨天晚上下了最新编译的版本，发现终于支持中文显示了，又少了一块绊脚石。</p>                </article>
+<span>| tags: <a href="/tag/bash.html">Bash</a><a href="/tag/ffmpeg.html">FFmpeg</a></span>
+</footer><!-- /.post-info --><div class="highlight"><pre><span class="c">#!/bin/bash</span>
+
+<span class="nb">shopt</span> -s extglob
+
+<span class="nv">width</span><span class="o">=</span>320
+<span class="nv">height</span><span class="o">=</span>240
+
+resize<span class="o">()</span> <span class="o">{</span>
+ ffmpeg -loglevel error -y -i <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> -c:v mjpeg -q:v <span class="m">0</span> -frames:v <span class="m">1</span> -vf <span class="nv">scale</span><span class="o">=</span><span class="s2">&quot; &#39;if( gte( (iw/</span><span class="nv">$width</span><span class="s2">)/(ih/</span><span class="nv">$height</span><span class="s2">),1 ), -2, </span><span class="nv">$width</span><span class="s2"> ):if( gte( (iw/</span><span class="nv">$width</span><span class="s2">)/(ih/</span><span class="nv">$height</span><span class="s2">),1 ), </span><span class="nv">$height</span><span class="s2"> , -2)&#39; &quot;</span>,crop<span class="o">=</span><span class="s2">&quot; &#39;min(iw,</span><span class="nv">$width</span><span class="s2">):min(ih,</span><span class="nv">$height</span><span class="s2">):if( eq(iw,</span><span class="nv">$width</span><span class="s2">), 0, (iw-</span><span class="nv">$width</span><span class="s2">)/2+if( eq(iw,</span><span class="nv">$width</span><span class="s2">), 0,</span><span class="nv">$offset</span><span class="s2">) ):if( eq(ih,</span><span class="nv">$height</span><span class="s2">), 0, (ih-</span><span class="nv">$height</span><span class="s2">)/2+if( eq(ih, </span><span class="nv">$height</span><span class="s2">), 0,</span><span class="nv">$offset</span><span class="s2">) )&#39; &quot;</span>,unsharp<span class="o">=</span>3:3:0.45:3:3:0  -sws_flags lanczos -an -sn -f rawvideo <span class="si">${</span><span class="nv">1</span><span class="p">%.+([^.])</span><span class="si">}</span>_resizesharp.jpg
+  <span class="c"># ffmpeg -loglevel error -y -i &quot;$1&quot; -c:v mjpeg -q:v 0 -frames:v 1 -vf scale=&quot; &#39;if( gte( (iw/$width)/(ih/$height),1 ), -2, $width ):if( gte( (iw/$width)/(ih/$height),1 ), $height , -2)&#39; &quot;,crop=&quot; &#39;min(iw,$width):min(ih,$height):if( eq(iw,$width), 0, (iw-$width)/2+if( eq(iw,$width), 0,$offset) ):if( eq(ih,$height), 0, (ih-$height)/2+if( eq(ih, $height), 0,$offset) )&#39; &quot;  -sws_flags lanczos -an -sn -f rawvideo ${1%.+([^.])}_resize.jpg</span>
+<span class="o">}</span>
+
+<span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^-?<span class="o">(</span>0<span class="p">|</span><span class="o">[</span>1-9<span class="o">][</span>0-9<span class="o">]</span>+<span class="o">)</span><span class="nv">$ </span><span class="o">]]</span><span class="p">;</span><span class="k">then</span>
+  <span class="nv">offset</span><span class="o">=</span><span class="nv">$2</span>
+  resize <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+<span class="k">else</span>
+  <span class="nv">offset</span><span class="o">=</span>0
+  <span class="k">for</span> x in <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="p">;</span><span class="k">do</span>
+    resize <span class="s2">&quot;</span><span class="nv">$x</span><span class="s2">&quot;</span>
+  <span class="k">done</span>
+<span class="k">fi</span>
+</pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
                     <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/download-the-latest-version-of-calibre-for-all-platforms.html" rel="bookmark"
+                           title="Permalink to Download the latest version of Calibre for all platforms">Download the latest version of Calibre for all platforms</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Tue 12 May 2015</span>
+<span>| tags: <a href="/tag/python.html">Python</a><a href="/tag/linux.html">Linux</a><a href="/tag/os-x.html">OS X</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/download-the-latest-version-of-calibre-for-all-platforms.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/download-itpub-file-attachments.html" rel="bookmark"
+                           title="Permalink to Download itpub file attachments">Download itpub file attachments</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Tue 12 May 2015</span>
+<span>| tags: <a href="/tag/python.html">python</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/download-itpub-file-attachments.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/busybox-w32-rang-ni-de-windowsming-ling-xing-bu-zai-fei-dao-wu-yi-fu-jia.html" rel="bookmark"
+                           title="Permalink to busybox-w32 让你的windows命令行不再废到无以复加">busybox-w32 让你的windows命令行不再废到无以复加</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Tue 12 May 2015</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/busybox-w32-rang-ni-de-windowsming-ling-xing-bu-zai-fei-dao-wu-yi-fu-jia.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -316,54 +380,10 @@
                 <a class="readmore" href="/ru-he-bu-an-zhuang-flashcheng-xu-lai-an-zhuang-flashcha-jian.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/jian-yi-de-wen-zi-zhuan-tu-pian-gong-ju.html" rel="bookmark"
-                           title="Permalink to 简易的文字转图片工具">简易的文字转图片工具</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 16 June 2014</span>
-<span>| tags: <a href="/tag/.html"></a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/jian-yi-de-wen-zi-zhuan-tu-pian-gong-ju.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/zhi-zuo-fa-bu-bian-xi-fa-xing-ban-du-li-ruan-jian-gang-ling.html" rel="bookmark"
-                           title="Permalink to 制作,发布便携(发行版独立)软件纲领">制作,发布便携(发行版独立)软件纲领</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 16 June 2014</span>
-<span>| tags: <a href="/tag/.html"></a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/zhi-zuo-fa-bu-bian-xi-fa-xing-ban-du-li-ruan-jian-gang-ling.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/gua-zai-mtpde-androidshe-bei-de-gong-ju-go-mptfs.html" rel="bookmark"
-                           title="Permalink to 挂载MTP的android设备的工具----go-mptfs">挂载MTP的android设备的工具----go-mptfs</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Wed 11 June 2014</span>
-<span>| tags: <a href="/tag/android.html">android</a><a href="/tag/mtp.html">mtp</a><a href="/tag/go.html">go</a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/gua-zai-mtpde-androidshe-bei-de-gong-ju-go-mptfs.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
             </ol><!-- /#posts-list -->
 <p class="paginator">
-    Page 1 / 1
+    Page 1 / 2
+        <a href="/category/article2.html">&raquo;</a>
 </p>
             </section><!-- /#content -->
         <section id="extras" class="body">
