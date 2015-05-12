@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>meoow</title><link href="/" rel="alternate"></link><link href="/feeds/meoow.atom.xml" rel="self"></link><id>/</id><updated>2015-05-12T00:00:00+00:00</updated><entry><title>处理cue文件并转换出mp3文件</title><link href="/chu-li-cuewen-jian-bing-zhuan-huan-chu-mp3wen-jian.html" rel="alternate"></link><updated>2015-05-12T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-05-12:chu-li-cuewen-jian-bing-zhuan-huan-chu-mp3wen-jian.html</id><summary type="html">&lt;p&gt;例如cue和wav文件，用这个解析cue文件转换除独立的mp3文件, 并写上id3 tag。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>meoow</title><link href="/" rel="alternate"></link><link href="/feeds/meoow.atom.xml" rel="self"></link><id>/</id><updated>2015-05-12T00:00:00+00:00</updated><entry><title>busybox-w32 让你的windows命令行不再废到无以复加</title><link href="/busybox-w32-rang-ni-de-windowsming-ling-xing-bu-zai-fei-dao-wu-yi-fu-jia.html" rel="alternate"></link><updated>2015-05-12T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-05-12:busybox-w32-rang-ni-de-windowsming-ling-xing-bu-zai-fei-dao-wu-yi-fu-jia.html</id><summary type="html">&lt;p&gt;很多时候都不得不惊叹Windows的命令行为什么会如此残废，写个简单的批处理都需要各种”迂回“策略，根本没有办法让你用正常思维思考，而那个PowerShell则根本就是脑残的另一种境界。
+好在有人把Busybox移植到了Windows上，总算稍微找到了些许顺手的感觉。
+我用去年的版本的时候还没有编译选项里还没有开启unicode支持，所以中文都用问号表示，而昨天晚上下了最新编译的版本，发现终于支持中文显示了，又少了一块绊脚石。&lt;/p&gt;</summary><category term=""></category></entry><entry><title>处理cue文件并转换出mp3文件</title><link href="/chu-li-cuewen-jian-bing-zhuan-huan-chu-mp3wen-jian.html" rel="alternate"></link><updated>2015-05-12T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-05-12:chu-li-cuewen-jian-bing-zhuan-huan-chu-mp3wen-jian.html</id><summary type="html">&lt;p&gt;例如cue和wav文件，用这个解析cue文件转换除独立的mp3文件, 并写上id3 tag。&lt;/p&gt;
 &lt;h2&gt;to mp3:&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python2.7&lt;/span&gt;
 
@@ -641,7 +643,147 @@ menuentry &amp;quot;Slax (Desktop)&amp;quot; {
 
 
 &lt;p&gt;otx64.efi和建立的grub.cfg都拷贝到GPT分区硬盘的ESP分区的/EFI/boot目录下，或者MBR分区硬盘的第一个FAT32分区的/EFI/boot下。
-开机启动菜单选择对应的EFI启动项即可了。&lt;/p&gt;</summary><category term="uefi"></category><category term="grub2"></category><category term="slax"></category><category term="linux"></category></entry><entry><title>dylibbundler - Mac OSX上的软件便携化工具</title><link href="/dylibbundler-mac-osxshang-de-ruan-jian-bian-xi-hua-gong-ju.html" rel="alternate"></link><updated>2015-05-12T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2014-06-16:dylibbundler-mac-osxshang-de-ruan-jian-bian-xi-hua-gong-ju.html</id><summary type="html">&lt;p&gt;例如，PSP模拟器PPSSPP的OSX版本在官方网站上提供了预编译的版本，但是它依赖SDL库需要自己提供，是用otool -L可以发现其所依赖的sdl库是用绝对路径写死了位置的也就是说必须是homebrew安装的版本，而不是rpath让系统找framework。
+开机启动菜单选择对应的EFI启动项即可了。&lt;/p&gt;</summary><category term="uefi"></category><category term="grub2"></category><category term="slax"></category><category term="linux"></category></entry><entry><title>OSX上清理app的打开文件类型</title><link href="/osxshang-qing-li-appde-da-kai-wen-jian-lei-xing.html" rel="alternate"></link><updated>2015-05-12T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2014-06-16:osxshang-qing-li-appde-da-kai-wen-jian-lei-xing.html</id><summary type="html">&lt;p&gt;例如，浏览器chromium的Info.plist里指定了关联txt格式文件，这样你一旦打开了chromium的所在文件夹，chromium跟txt文件的关联就自动建立了，于是你右键选择txt文件时，open with列表里就多了chromium。&lt;/p&gt;
+&lt;p&gt;但是至少对于我来说，很多应用我跟本不需要用它来打开某些格式的文件，但是因为这个自动注册的机制，导致open with列表很长，于是我就应该将没有的清理掉。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python2.7&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;plistlib&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;shutil&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;subprocess&lt;/span&gt;
+
+&lt;span class="n"&gt;SUBDIR_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sep&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Contents&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Info.plist&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;FileTypeCleaner&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;pathOfFile&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filepath&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;checkInfoPlistExistence&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pathOfFile&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filepath&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plistdata&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plistlib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;readPlist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filepath&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="k"&gt;except&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plistdata&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plistlib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;readPlistFromString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+                        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;binary2xml&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filepath&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+                &lt;span class="k"&gt;except&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plistdata&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plistdata&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@staticmethod&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;checkInfoPlistExistence&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pathOfFile&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sep&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;pathOfFile&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SUBDIR_PATH&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;isfile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;checkInfoPlistHasTypeKey&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;CFBundleDocumentTypes&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plistdata&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; \
+                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plistdata&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;CFBundleDocumentTypes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="p"&gt;[]:&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;vacuumTypeKey&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plistdata&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;CFBundleDocumentTypes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@staticmethod&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;binary2xml&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pathOfFile&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;commandline&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;plutil -convert xml1 -o - -- &amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;pathOfFile&lt;/span&gt;
+        &lt;span class="n"&gt;run&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;subprocess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Popen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;commandline&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;subprocess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PIPE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;subprocess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PIPE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;plistString&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dummy&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;communicate&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;returncode&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;plistString&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Usage: cleanFTypeAssoc.py app1.app [app2.app ...]&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="ne"&gt;SystemExit&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:]:&lt;/span&gt;
+        &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FileTypeCleaner&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plistdata&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;checkInfoPlistHasTypeKey&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+                &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vacuumTypeKey&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+                &lt;span class="n"&gt;shutil&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;move&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filepath&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filepath&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;~&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="n"&gt;plistlib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;writePlist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plistdata&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filepath&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="OS X"></category></entry><entry><title>纯Bash来获取文件的绝对路径</title><link href="/chun-bashlai-huo-qu-wen-jian-de-jue-dui-lu-jing.html" rel="alternate"></link><updated>2015-05-12T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2014-06-16:chun-bashlai-huo-qu-wen-jian-de-jue-dui-lu-jing.html</id><summary type="html">&lt;h2&gt;pure bash&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#get absolute path(shell)&lt;/span&gt;
+abspath&lt;span class="o"&gt;(){&lt;/span&gt; &lt;span class="c"&gt;#{{{&lt;/span&gt;
+  &lt;span class="nb"&gt;local &lt;/span&gt;thePath
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; ! &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;~ ^/ &lt;span class="o"&gt;]]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="nv"&gt;thePath&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$PWD&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+  &lt;span class="k"&gt;else&lt;/span&gt;
+    &lt;span class="nv"&gt;thePath&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+  &lt;span class="k"&gt;fi&lt;/span&gt;
+  &lt;span class="nv"&gt;IFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/ &lt;span class="nv"&gt;parr&lt;/span&gt;&lt;span class="o"&gt;=(&lt;/span&gt;&lt;span class="nv"&gt;$thePath&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="nb"&gt;declare&lt;/span&gt; -a outp
+  &lt;span class="k"&gt;for&lt;/span&gt; i in &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;parr&lt;/span&gt;&lt;span class="p"&gt;[@]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$i&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; in
+    &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;.&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;continue&lt;/span&gt; &lt;span class="p"&gt;;;&lt;/span&gt;
+    ..&lt;span class="o"&gt;)&lt;/span&gt;
+      &lt;span class="nv"&gt;len&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${#&lt;/span&gt;&lt;span class="nv"&gt;outp&lt;/span&gt;&lt;span class="p"&gt;[@]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+      &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="nv"&gt;len&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;0&lt;span class="o"&gt;))&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="k"&gt;continue&lt;/span&gt;
+      &lt;span class="k"&gt;else&lt;/span&gt;
+        &lt;span class="nb"&gt;unset &lt;/span&gt;outp&lt;span class="o"&gt;[&lt;/span&gt;len-1&lt;span class="o"&gt;]&lt;/span&gt; 
+      &lt;span class="k"&gt;fi&lt;/span&gt;
+      &lt;span class="p"&gt;;;&lt;/span&gt;
+    *&lt;span class="o"&gt;)&lt;/span&gt;
+      &lt;span class="nv"&gt;len&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${#&lt;/span&gt;&lt;span class="nv"&gt;outp&lt;/span&gt;&lt;span class="p"&gt;[@]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+      outp&lt;span class="o"&gt;[&lt;/span&gt;len&lt;span class="o"&gt;]=&lt;/span&gt;&lt;span class="nv"&gt;$i&lt;/span&gt;
+      &lt;span class="p"&gt;;;&lt;/span&gt;
+    &lt;span class="k"&gt;esac&lt;/span&gt;
+  &lt;span class="k"&gt;done&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; /&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;outp&lt;/span&gt;&lt;span class="p"&gt;[*]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="c"&gt;#}}}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;using gawk:&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#get absolute path(gawk)&lt;/span&gt;
+abspath_gawk&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;  &lt;span class="c"&gt;#{{{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;gawk &lt;span class="s1"&gt;&amp;#39;{&lt;/span&gt;
+&lt;span class="s1"&gt;            if(substr($0,1,1) != &amp;quot;/&amp;quot;){&lt;/span&gt;
+&lt;span class="s1"&gt;                path = ENVIRON[&amp;quot;PWD&amp;quot;]&amp;quot;/&amp;quot;$0&lt;/span&gt;
+&lt;span class="s1"&gt;            } else path = $0&lt;/span&gt;
+&lt;span class="s1"&gt;            split(path, a, &amp;quot;/&amp;quot;)&lt;/span&gt;
+&lt;span class="s1"&gt;            n = asorti(a, b,&amp;quot;@ind_num_asc&amp;quot;)&lt;/span&gt;
+&lt;span class="s1"&gt;            for(i in a){&lt;/span&gt;
+&lt;span class="s1"&gt;                if(a[i]==&amp;quot;&amp;quot; || a[i]==&amp;quot;.&amp;quot;){&lt;/span&gt;
+&lt;span class="s1"&gt;                    delete a[i]&lt;/span&gt;
+&lt;span class="s1"&gt;                }&lt;/span&gt;
+&lt;span class="s1"&gt;            }&lt;/span&gt;
+&lt;span class="s1"&gt;            n = asorti(a, b, &amp;quot;@ind_num_asc&amp;quot;)&lt;/span&gt;
+&lt;span class="s1"&gt;            m = 0&lt;/span&gt;
+&lt;span class="s1"&gt;            while(m!=n){&lt;/span&gt;
+&lt;span class="s1"&gt;                m = n&lt;/span&gt;
+&lt;span class="s1"&gt;                for(i=1;i&amp;lt;=n;i++){&lt;/span&gt;
+&lt;span class="s1"&gt;                    if(a[b[i]]==&amp;quot;..&amp;quot;){&lt;/span&gt;
+&lt;span class="s1"&gt;                        if(b[i-1] in a){&lt;/span&gt;
+&lt;span class="s1"&gt;                            delete a[b[i-1]]&lt;/span&gt;
+&lt;span class="s1"&gt;                            delete a[b[i]]&lt;/span&gt;
+&lt;span class="s1"&gt;                            n = asorti(a, b, &amp;quot;@ind_num_asc&amp;quot;)&lt;/span&gt;
+&lt;span class="s1"&gt;                            break&lt;/span&gt;
+&lt;span class="s1"&gt;                        } else exit 1&lt;/span&gt;
+&lt;span class="s1"&gt;                    }&lt;/span&gt;
+&lt;span class="s1"&gt;                }&lt;/span&gt;
+&lt;span class="s1"&gt;            }&lt;/span&gt;
+&lt;span class="s1"&gt;            n = asorti(a, b, &amp;quot;@ind_num_asc&amp;quot;)&lt;/span&gt;
+&lt;span class="s1"&gt;            if(n==0){&lt;/span&gt;
+&lt;span class="s1"&gt;                printf &amp;quot;/&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;            } else {&lt;/span&gt;
+&lt;span class="s1"&gt;                for(i=1;i&amp;lt;=n;i++){&lt;/span&gt;
+&lt;span class="s1"&gt;                    printf &amp;quot;/&amp;quot;a[b[i]]&lt;/span&gt;
+&lt;span class="s1"&gt;                }&lt;/span&gt;
+&lt;span class="s1"&gt;            }&lt;/span&gt;
+&lt;span class="s1"&gt;        }&amp;#39;&lt;/span&gt;
+    &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Linux"></category><category term="Bash"></category></entry><entry><title>dylibbundler - Mac OSX上的软件便携化工具</title><link href="/dylibbundler-mac-osxshang-de-ruan-jian-bian-xi-hua-gong-ju.html" rel="alternate"></link><updated>2015-05-12T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2014-06-16:dylibbundler-mac-osxshang-de-ruan-jian-bian-xi-hua-gong-ju.html</id><summary type="html">&lt;p&gt;例如，PSP模拟器PPSSPP的OSX版本在官方网站上提供了预编译的版本，但是它依赖SDL库需要自己提供，是用otool -L可以发现其所依赖的sdl库是用绝对路径写死了位置的也就是说必须是homebrew安装的版本，而不是rpath让系统找framework。
 但是事实上完全是可以通过一定的“hack”手段把sdl库集成到app bundle中再发布，这样就连sdl库都省得自己安装了。
 手动的办法就是将sdl的dylib文件拷贝到PPSSPP执行文件的统一目录下，然后用install_name_tool来修改PPSSPP加载SDL库的查询路径。例如&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;install_name_tool -change /usr/local/lib/libsdl.dylib @executable_path/libsdl.dylib PPSSPP
@@ -1071,4 +1213,9 @@ sudo cp -r Library/Internet&lt;span class="se"&gt;\ &lt;/span&gt;Plug-Ins/* /Lib
 &lt;p&gt;2 - 在相对比较老的发行版上编译，这样是用老GLIBC在新的发行版上也能运行，反之则不行。&lt;/p&gt;
 &lt;p&gt;3 - 附带共享库用RPATH，别套脚本用LD_LIBRARY_PATH（属于临时解决方法，发布软件不应该使用该方法）。编译的时候考虑是用 -Wl,-rpath='$ORIGIN/../lib'传递给 linker类似的方法，这样执行文件会在自己的相对路径去找so库文件。$ORIGIN指代的是真正的执行文件的位置，所以即使软链接到别的地方也没问 题，而用LD_LIBRARY_PATH环境变量则不行。用ldd查看可以看到效果。&lt;/p&gt;
 &lt;p&gt;4 - 其实也可以是用patchelf来hack已编译好的执行文件的RPATH，记得so库之间有互相依赖的话也要改。&lt;/p&gt;
-&lt;p&gt;5 - 系统的库如libc或libm是没什么必要也打包的。&lt;/p&gt;</summary><category term=""></category></entry></feed>
+&lt;p&gt;5 - 系统的库如libc或libm是没什么必要也打包的。&lt;/p&gt;</summary><category term=""></category></entry><entry><title>挂载MTP的android设备的工具----go-mptfs</title><link href="/gua-zai-mtpde-androidshe-bei-de-gong-ju-go-mptfs.html" rel="alternate"></link><updated>2015-05-12T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2014-06-11:gua-zai-mtpde-androidshe-bei-de-gong-ju-go-mptfs.html</id><summary type="html">&lt;p&gt;在Linux下，不能原生挂载MTP设备，OSX下的Android File Transfer也是BUG成堆。
+基于libmtp的mtpfs或基于adb的adbfs利用fuse挂载，性能很差还不稳定。&lt;/p&gt;
+&lt;p&gt;无意间发现了个霸道的项目
+https://github.com/hanwen/go-mtpfs
+用Go实现的mtpfs，使用了感觉性能很好，可以满足了。
+作者应该是只为Linux开发的，不过我试验了，在OSX下用homebrew安装了libusb和osxfuse以后，也可以编译通过和正常使用，不过貌似性能没有Linux下好？也许是fuse的问题？&lt;/p&gt;</summary><category term="android"></category><category term="mtp"></category><category term="go"></category></entry></feed>

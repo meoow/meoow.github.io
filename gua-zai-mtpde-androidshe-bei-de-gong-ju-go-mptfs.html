@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>挂载MTP的android设备的工具----go-mptfs</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/gua-zai-mtpde-androidshe-bei-de-gong-ju-go-mptfs.html" rel="bookmark"
+           title="Permalink to 挂载MTP的android设备的工具----go-mptfs">挂载MTP的android设备的工具----go-mptfs</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Wed 11 June 2014</span>
+<span>| tags: <a href="/tag/android.html">android</a><a href="/tag/mtp.html">mtp</a><a href="/tag/go.html">go</a></span>
+</footer><!-- /.post-info -->      <p>在Linux下，不能原生挂载MTP设备，OSX下的Android File Transfer也是BUG成堆。
+基于libmtp的mtpfs或基于adb的adbfs利用fuse挂载，性能很差还不稳定。</p>
+<p>无意间发现了个霸道的项目
+https://github.com/hanwen/go-mtpfs
+用Go实现的mtpfs，使用了感觉性能很好，可以满足了。
+作者应该是只为Linux开发的，不过我试验了，在OSX下用homebrew安装了libusb和osxfuse以后，也可以编译通过和正常使用，不过貌似性能没有Linux下好？也许是fuse的问题？</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
