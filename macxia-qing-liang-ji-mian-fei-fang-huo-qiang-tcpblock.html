@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Mac下轻量级免费防火墙 TCPBlock</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/macxia-qing-liang-ji-mian-fei-fang-huo-qiang-tcpblock.html" rel="bookmark"
+           title="Permalink to Mac下轻量级免费防火墙 TCPBlock">Mac下轻量级免费防火墙 TCPBlock</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Tue 12 May 2015</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->      <p>系统偏好设置里的防火墙只能拦截incoming链接</p>
+<p>系统自带的PF防火墙配合icefloor或pflist这样的图形前端也只能实现基于地址规则的outcoming链接</p>
+<p>而可以根据不同应用程序定制拦截规则的Little Snitch 或 Hands Off 都是商业软件</p>
+<p>最近发现了这个集两类防火墙之所长的轻量级免费防火墙 —— TCPBlock</p>
+<p>这个使用的是自己的内核模块来实现的匹配/拦截，没有用到PF，所以即使你用到了PF的其他功能，同时使用也应该不会有冲突</p>
+<p><img alt="tcpblock" src="/img/tcpblock.png" /></p>
+<p>ystem Preferences里会有设置选项</p>
+<p>规则是这样，以斜线作为分割(/)，</p>
+<p>第一例是要拦截的程序名称，可以通过按加号选取，星号表示拦截所有程序（如果后面配置具体IP的话就相当于PF）</p>
+<p>第二列是要拦截的地址，如果用星号表示拦截该软件的所有网络连接，因为已经用斜线作为分割了，所以显然没法再用斜线设置变长子网了，设置网段只能用-或*来设置</p>
+<p>（例如 192.168.0.16/28  要写成 192.168.0.16-31<br />
+   192.168.1.0/24 要写成 192.168.1.*<br />
+）</p>
+<p>第三列是要拦截的端口号，一般来说对于outcoming拦截没必要设置具体端口，直接用星号就可以了。</p>
+<p>后面的四、五列是可选项，可以给出程序的hash和路径，因为mac的内核识别程序名只截取前16个字符，因此从内核角度不排除会有不同程序“重名”问题，而用这个可选项来确定唯一性。</p>
+<p>该软件的官网在wordpress，所以你懂得，因此我还是上传到百毒盘上吧</p>
+<p>http://pan.baidu.com/s/1bnF1duv</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

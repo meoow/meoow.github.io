@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>制作,发布便携(发行版独立)软件纲领</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/zhi-zuo-fa-bu-bian-xi-fa-xing-ban-du-li-ruan-jian-gang-ling.html" rel="bookmark"
+           title="Permalink to 制作,发布便携(发行版独立)软件纲领">制作,发布便携(发行版独立)软件纲领</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->      <p>1 - 如果能直接编译成静态的那自然是比较省事了，但很多时候没办法这样，需要动态的，那就接着看吧</p>
+<p>2 - 在相对比较老的发行版上编译，这样是用老GLIBC在新的发行版上也能运行，反之则不行。</p>
+<p>3 - 附带共享库用RPATH，别套脚本用LD_LIBRARY_PATH（属于临时解决方法，发布软件不应该使用该方法）。编译的时候考虑是用 -Wl,-rpath='$ORIGIN/../lib'传递给 linker类似的方法，这样执行文件会在自己的相对路径去找so库文件。$ORIGIN指代的是真正的执行文件的位置，所以即使软链接到别的地方也没问 题，而用LD_LIBRARY_PATH环境变量则不行。用ldd查看可以看到效果。</p>
+<p>4 - 其实也可以是用patchelf来hack已编译好的执行文件的RPATH，记得so库之间有互相依赖的话也要改。</p>
+<p>5 - 系统的库如libc或libm是没什么必要也打包的。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

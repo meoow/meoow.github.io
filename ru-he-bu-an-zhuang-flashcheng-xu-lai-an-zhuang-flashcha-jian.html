@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>如何不“安装”Flash程序来“安装”Flash插件</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/ru-he-bu-an-zhuang-flashcheng-xu-lai-an-zhuang-flashcha-jian.html" rel="bookmark"
+           title="Permalink to 如何不“安装”Flash程序来“安装”Flash插件">如何不“安装”Flash程序来“安装”Flash插件</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/os-x.html">OS X</a><a href="/tag/flash.html">Flash</a></span>
+</footer><!-- /.post-info -->      <p>sh的问题，毕竟终归有些时候还是不得不用到。</p>
+<p>这里要说的是，我不喜欢Adobe的Flash安装程序总是捆绑一些没用的自动更新和设置程序，我只是想安装那个播放插件就可以了。</p>
+<p>如果有人也希望这样的话可以往下看：</p>
+<p>首先双击挂载安装程序的dmg，</p>
+<p>把“/Volumes/Flash Player/Install Adobe Flash Player.app/Contents/Resources/Adobe Flash Player.pkg”</p>
+<p>这个实际的安装包文件拷贝到一个临时目录下，在该目录打开终端运行如下命令：</p>
+<div class="highlight"><pre>xar -xf Adobe<span class="se">\ </span>Flash<span class="se">\ </span>Player.pkg
+gzip -cd &lt; AdobeFlashPlayerComponent.pkg/Payload <span class="p">|</span>cpio -i
+gzip -cd &lt; AdobeFlashPlayerComponent.pkg/Scripts <span class="p">|</span>cpio -i./finalize .
+sudo cp -r Library/Internet<span class="se">\ </span>Plug-Ins/* /Library/Internet<span class="se">\ </span>Plug-Ins/
+</pre></div>
+
+
+<p>最后把该目录解压出来剩余的没用的文件删掉即可。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
