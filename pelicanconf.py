@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = u'meoow'
 SITENAME = u'meoow'
-SITEURL = 'http://meoow.github.io'
+SITEURL = ''
 
 #TIMEZONE = 'Asia/Beijing'
 
