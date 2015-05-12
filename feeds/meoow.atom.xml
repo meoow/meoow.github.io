@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>meoow</title><link href="/" rel="alternate"></link><link href="/feeds/meoow.atom.xml" rel="self"></link><id>/</id><updated>2015-05-11T00:00:00+00:00</updated><entry><title>struct reflect</title><link href="/struct-reflect.html" rel="alternate"></link><updated>2015-05-11T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2014-06-25:struct-reflect.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>meoow</title><link href="/" rel="alternate"></link><link href="/feeds/meoow.atom.xml" rel="self"></link><id>/</id><updated>2015-05-12T00:00:00+00:00</updated><entry><title>WizNote 2.1.17 for Raspbian</title><link href="/wiznote-2117-for-raspbian.html" rel="alternate"></link><updated>2015-05-12T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-05-12:wiznote-2117-for-raspbian.html</id><summary type="html">&lt;p&gt;&lt;img alt="screen shot" src="/img/wiznote_ss.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Install 'libqtwebkit4' first&lt;/p&gt;
+&lt;p&gt;Download:&lt;br /&gt;
+&lt;a href="http://pan.baidu.com/s/1eQo2Btg"&gt;WizNote 2.1.17 armhf&lt;/a&gt;&lt;/p&gt;</summary><category term=""></category></entry><entry><title>struct reflect</title><link href="/struct-reflect.html" rel="alternate"></link><updated>2015-05-11T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2014-06-25:struct-reflect.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="s"&gt;&amp;quot;fmt&amp;quot;&lt;/span&gt;

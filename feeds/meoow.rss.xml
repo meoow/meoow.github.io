@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>meoow</title><link>/</link><description></description><atom:link href="/feeds/meoow.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 11 May 2015 00:00:00 +0000</lastBuildDate><item><title>struct reflect</title><link>/struct-reflect.html</link><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>meoow</title><link>/</link><description></description><atom:link href="/feeds/meoow.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 12 May 2015 00:00:00 +0000</lastBuildDate><item><title>WizNote 2.1.17 for Raspbian</title><link>/wiznote-2117-for-raspbian.html</link><description>&lt;p&gt;&lt;img alt="screen shot" src="/img/wiznote_ss.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Install 'libqtwebkit4' first&lt;/p&gt;
+&lt;p&gt;Download:&lt;br /&gt;
+&lt;a href="http://pan.baidu.com/s/1eQo2Btg"&gt;WizNote 2.1.17 armhf&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meoow</dc:creator><pubDate>Tue, 12 May 2015 00:00:00 +0000</pubDate><guid>tag:,2015-05-12:wiznote-2117-for-raspbian.html</guid><category></category></item><item><title>struct reflect</title><link>/struct-reflect.html</link><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="s"&gt;&amp;quot;fmt&amp;quot;&lt;/span&gt;

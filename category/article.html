@@ -21,34 +21,33 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/struct-reflect.html">struct reflect</a></h1>
+                    <h1 class="entry-title"><a href="/wiznote-2117-for-raspbian.html">WizNote 2.1.17 for Raspbian</a></h1>
 <footer class="post-info">
-        <span>Wed 25 June 2014</span>
-<span>| tags: <a href="/tag/go.html">go</a></span>
-</footer><!-- /.post-info --><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
-
-<span class="kn">import</span> <span class="p">(</span>
-    <span class="s">&quot;fmt&quot;</span>
-    <span class="s">&quot;reflect&quot;</span>
-<span class="p">)</span>
-
-<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">x</span> <span class="o">:=</span> <span class="kd">struct</span> <span class="p">{</span>
-        <span class="nx">Foo</span> <span class="kt">string</span>
-        <span class="nx">Bar</span> <span class="kt">int</span>
-    <span class="p">}{</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span>
-
-    <span class="nx">t</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">TypeOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
-    <span class="nx">v</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">ValueOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
-    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nb">make</span><span class="p">([]</span><span class="kd">struct</span><span class="p">{},</span> <span class="nx">t</span><span class="p">.</span><span class="nx">NumField</span><span class="p">())</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">Field</span><span class="p">(</span><span class="nx">i</span><span class="p">).</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">FieldByName</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">Field</span><span class="p">(</span><span class="nx">i</span><span class="p">).</span><span class="nx">Name</span><span class="p">).</span><span class="nx">Interface</span><span class="p">())</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>                </article>
+        <span>Tue 12 May 2015</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info --><p><img alt="screen shot" src="/img/wiznote_ss.png" /></p>
+<p>Install 'libqtwebkit4' first</p>
+<p>Download:<br />
+<a href="http://pan.baidu.com/s/1eQo2Btg">WizNote 2.1.17 armhf</a></p>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
                     <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/struct-reflect.html" rel="bookmark"
+                           title="Permalink to struct reflect">struct reflect</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Wed 25 June 2014</span>
+<span>| tags: <a href="/tag/go.html">go</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/struct-reflect.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
