@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>烧录卡的rom裁减</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/shao-lu-qia-de-romcai-jian.html" rel="bookmark"
+           title="Permalink to 烧录卡的rom裁减">烧录卡的rom裁减</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Sun 28 December 2014</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->      <p>从GBA时代就知道，从卡带dump下来的rom并不是器实际容量，而是闪存芯片的容量。例如rom的实际用了20M，但生产卡带也需要使用32MB的闪存芯片，这样就有12MB是没用的填充空白数据。那时候烧录卡内置的容量也就128MB，256MB，当然寸M必争了。</p>
+<p>到NDS的时候基本上rom都会有几MB到几十MB的盈余，那个时候烧录卡所用的micro sd卡普遍容量还是比较吃紧的，把这个空白部分去掉能省出多装几个rom的容量。</p>
+<p>到3DS的rom，更夸张了，大多能有几百MB到上G的空白数据，所以就算现在的micro sd容量很富裕了，但是裁减一下还是能省出很大一块空间。</p>
+<p>GBA的时代，有的烧录卡的烧录工具自带这个功能。</p>
+<p>NDS的时候，好不容易找到了Linux下的裁减工具，既不好用也不支持批量处理。</p>
+<p>3DS的时候，那时它还没破解所以耍了一段时间卖了。最近买了个二手3DS，配上gateway烧录卡，又把rom裁减这回事想起来了，不过跟小时候的区别是，现在直接自己写一个就好了。时间真是快啊……</p>
+<p>从前向后扫：</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python2.7</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+
+<span class="n">chunksize</span> <span class="o">=</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">200</span>
+
+<span class="k">def</span> <span class="nf">trunc_tail</span><span class="p">(</span><span class="n">infile</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+        <span class="n">currentByte</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">chunksize</span><span class="p">)</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">nextbyte</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">chunksize</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">nextbyte</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">elif</span> <span class="n">currentByte</span> <span class="o">!=</span> <span class="n">nextbyte</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">currentByte</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nextbyte</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">currentByte</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">nextbyte</span><span class="p">):]</span> <span class="o">==</span> <span class="n">nextbyte</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                <span class="n">position</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+                <span class="n">currentByte</span> <span class="o">=</span> <span class="n">nextbyte</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\r</span><span class="s">{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">position</span><span class="p">))</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span><span class="o">.</span><span class="n">st_size</span> <span class="o">!=</span> <span class="n">position</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="s">&#39;ab&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">wh</span><span class="p">:</span>
+            <span class="n">wh</span><span class="o">.</span><span class="n">truncate</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">trunc_tail</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+
+
+<p>从后向前扫：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/usr/bin/env python2.7</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+
+<span class="n">chunksize</span> <span class="o">=</span> <span class="mi">1024</span>
+
+<span class="k">def</span> <span class="nf">trunk_tail</span><span class="p">(</span><span class="n">infile</span><span class="p">):</span>
+    <span class="n">filesize</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span><span class="o">.</span><span class="n">st_size</span>
+    <span class="n">blank</span> <span class="o">=</span> <span class="s">&#39; &#39;</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filesize</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filesize</span><span class="p">))</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+        <span class="n">finalpos</span> <span class="o">=</span> <span class="n">filesize</span>
+        <span class="k">for</span> <span class="n">cks</span> <span class="ow">in</span> <span class="p">(</span><span class="n">chunksize</span><span class="o">*</span><span class="mi">500</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">*</span><span class="mi">50</span><span class="p">,</span> <span class="n">chunksize</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">/</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">finalpos</span> <span class="o">&lt;</span> <span class="n">cks</span><span class="o">*</span><span class="mi">2</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">fh</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">finalpos</span><span class="o">-</span><span class="n">cks</span><span class="p">)</span>
+            <span class="n">preblock</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cks</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">finalpos</span><span class="o">-</span><span class="n">cks</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="n">cks</span><span class="p">):</span>
+                <span class="n">fh</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+                <span class="n">currblock</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cks</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">preblock</span> <span class="o">!=</span> <span class="n">currblock</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">pos</span> <span class="o">!=</span> <span class="n">finalpos</span> <span class="o">-</span> <span class="n">cks</span> <span class="o">*</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="n">finalpos</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">+</span> <span class="n">cks</span>
+                    <span class="k">break</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\r</span><span class="s">{0}</span><span class="se">\r</span><span class="s">{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">blank</span><span class="p">,</span><span class="n">pos</span><span class="p">))</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\r</span><span class="s">{0}</span><span class="se">\r</span><span class="s">{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">blank</span><span class="p">,</span><span class="n">finalpos</span><span class="p">))</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">finalpos</span> <span class="o">&lt;</span> <span class="n">filesize</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="s">&#39;ab&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">wh</span><span class="p">:</span>
+            <span class="n">wh</span><span class="o">.</span><span class="n">truncate</span><span class="p">(</span><span class="n">finalpos</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">trunk_tail</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>一般来说从后向前速度应该会更快。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

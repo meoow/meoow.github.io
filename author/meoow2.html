@@ -23,6 +23,100 @@
                     <ol id="posts-list" class="hfeed" start="19">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="/letbulletgo-pushbullet-de-ke-hu-duan-ku-ji-ming-ling-xing-gong-ju.html" rel="bookmark"
+                           title="Permalink to LetBulletGo -- PushBullet 的客户端库及命令行工具">LetBulletGo -- PushBullet 的客户端库及命令行工具</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Fri 28 November 2014</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/letbulletgo-pushbullet-de-ke-hu-duan-ku-ji-ming-ling-xing-gong-ju.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/dong-tai-lian-jie-de-zhi-xing-wen-jian-de-xiang-qian-jian-rong.html" rel="bookmark"
+                           title="Permalink to 动态链接的执行文件的向前兼容">动态链接的执行文件的向前兼容</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 24 November 2014</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/dong-tai-lian-jie-de-zhi-xing-wen-jian-de-xiang-qian-jian-rong.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/struct-reflect.html" rel="bookmark"
+                           title="Permalink to struct reflect">struct reflect</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Wed 25 June 2014</span>
+<span>| tags: <a href="/tag/go.html">go</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/struct-reflect.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/c-combination.html" rel="bookmark"
+                           title="Permalink to C combination">C combination</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Wed 25 June 2014</span>
+<span>| tags: <a href="/tag/c.html">C</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/c-combination.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/combination.html" rel="bookmark"
+                           title="Permalink to Combination">Combination</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Tue 24 June 2014</span>
+<span>| tags: <a href="/tag/go.html">go</a></span>
+</footer><!-- /.post-info -->                <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">n</span> <span class="p">=</span> <span class="mi">6</span>
+    <span class="kd">var</span> <span class="nx">k</span> <span class="p">=</span> <span class="mi">3</span>
+    <span class="nx">ar</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span>
+    <span class="nx">comb</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">ar</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">damn</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">count</span> <span class="p">=</span> <span class="mi">0</span>
+
+<span class="kd">func</span> <span class="nx">comb</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">k</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">arr</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">count</span><span class="o">++</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;--&quot;</span><span class="p">,</span> <span class="nx">count</span><span class="p">,</span> <span class="s">&quot;--&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="nx">k</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span> <span class="p">{</span>
+        <span class="nx">arr</span><span class="p">[</span><span class="nx">k</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">i</span>
+        <span class="k">if</span> <span class="nx">k</span> <span class="p">&gt;</span> <span class="mi">1 ...</span></pre></div>
+                <a class="readmore" href="/combination.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="/multi-upload.html" rel="bookmark"
                            title="Permalink to Multi Upload">Multi Upload</a></h1>
                 </header>

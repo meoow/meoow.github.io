@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>动态链接的执行文件的向前兼容</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/dong-tai-lian-jie-de-zhi-xing-wen-jian-de-xiang-qian-jian-rong.html" rel="bookmark"
+           title="Permalink to 动态链接的执行文件的向前兼容">动态链接的执行文件的向前兼容</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 24 November 2014</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->      <p>在相对较新的发行版上编译的程序，部署在老发行版上多半会出问题，</p>
+<p>静态链接并不是万能的解决方案，而动态链接的执行文件遇到的最常见的问题是依赖GLIBC的版本高于目标系统的版本。</p>
+<p>在一个老版本系统上重新编译并不总是可行，一来要重新搭配环境比较麻烦，二来可能压根就没有源码能重新编译。</p>
+<p>我在stack overflow上看到了一种解决方案：</p>
+<p>首先，将libc.so等核心库跟其他依赖的库一并打包还不够，因为ld-2.14.so和libc必须要匹配，所以/lib/ld-2.14.so也要一并拷贝过来。</p>
+<p>用ldd检查执行文件的递归依赖关系，将所有依赖的so文件拷贝到例如lib目录，执行的时候需要显式的用ld-2.14.so调用：</p>
+<div class="highlight"><pre>/path/to/ld-2.14.so --library-path /path/to/lib /path/to/executable
+</pre></div>
+
+
+<p>但是stack overflow上提到一点是如果程序根据argv[0]来重新exec自己的话，会有问题。</p>
+<p>但是我用一个简单的c程序测试argv[0]并没有发生变化，不知道是不是我的理解不正确。</p>
+<p>另外，即便是与参数形式运行执行文件，但/path/to/executable必须使用相对或绝对路径，省略路径会报错。</p>
+<p>这里还可以用patchelf设置RPATH</p>
+<div class="highlight"><pre>patchelf --set-rpath <span class="s1">&#39;$ORIGIN/relative/to/lib&#39;</span> /path/to/executable
+</pre></div>
+
+
+<p>然后把所有依赖的共享库的RPATH设置为$ORIGIN（如果它们都放在同一目录下的话）</p>
+<p>这样可用</p>
+<p>/path/to/ld-2.14.so /path/to/executable</p>
+<p>省略掉--library-path参数</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

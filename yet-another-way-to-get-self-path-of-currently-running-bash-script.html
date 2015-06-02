@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Yet another way to get self path of currently running bash script.</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/yet-another-way-to-get-self-path-of-currently-running-bash-script.html" rel="bookmark"
+           title="Permalink to Yet another way to get self path of currently running bash script.">Yet another way to get self path of currently running bash script.</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Fri 19 December 2014</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->      <p>获取运行的脚本自身所在的路径，所面临的最核心的问题就是怎么追踪软链接</p>
+<p>尽管Linux的coreutils中的readlink已经提供了完美答案，但并不是所有类UNIX系统中的readlink都来自coreutils，</p>
+<p>更加通用的办法在stackoverflow上也提供了多如牛毛的答案，</p>
+<p>但是我觉得其中不少答案或多或少存在一些问题，有的不能追踪多级软链接，有的实现太长不方便简单快捷的放在脚本里，有的无法应对一些特殊的路径情况。</p>
+<p>于是我也想出了一个稳健的(自认为)的实现方法：</p>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+
+<span class="nb">shopt</span> -s extglob
+
+<span class="nv">selfpath</span><span class="o">=</span><span class="nv">$0</span>
+<span class="nv">selfdir</span><span class="o">=</span><span class="si">${</span><span class="nv">selfpath</span><span class="p">%%+([!/])</span><span class="si">}</span>
+
+<span class="k">while</span> <span class="o">[[</span> -L <span class="s2">&quot;</span><span class="nv">$selfpath</span><span class="s2">&quot;</span> <span class="o">]]</span><span class="p">;</span><span class="k">do</span>
+  <span class="nv">selfpath</span><span class="o">=</span><span class="k">$(</span>readlink <span class="s2">&quot;</span><span class="nv">$selfpath</span><span class="s2">&quot;</span><span class="k">)</span>
+  <span class="k">if</span> <span class="o">[[</span> ! <span class="s2">&quot;</span><span class="nv">$selfpath</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^/ <span class="o">]]</span><span class="p">;</span><span class="k">then</span>
+    <span class="nv">selfpath</span><span class="o">=</span><span class="si">${</span><span class="nv">selfdir</span><span class="si">}${</span><span class="nv">selfpath</span><span class="si">}</span>
+  <span class="k">fi</span>
+  <span class="nv">selfdir</span><span class="o">=</span><span class="si">${</span><span class="nv">selfpath</span><span class="p">%%+([!/])</span><span class="si">}</span>
+<span class="k">done</span>
+</pre></div>
+
+
+<p>利用extglob解决原的变量替换方法会在一些特殊情况下不能正常处理，不用cd式的处理方法，想要实现方法简短，readlink基本是避免不了，但是不用选项，使之完全通用。</p>
+<p>这个我也贴在stackoverflow上了</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
