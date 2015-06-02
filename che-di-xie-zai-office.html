@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>彻底卸载Office</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/che-di-xie-zai-office.html" rel="bookmark"
+           title="Permalink to 彻底卸载Office">彻底卸载Office</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Thu 29 January 2015</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->      <p>用SP包升级会搞得比较乱套，不如先将老版本卸载掉，再装集成最新SP的安装，所以我将官方给出的步骤集合在了一起</p>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+
+sudo rm -rf /Applications/Microsoft<span class="se">\ </span>Office<span class="se">\ </span>2011
+sudo rm -f ~/Library/Preferences/com.microsoft.*
+sudo rm -f /Library/LaunchDaemons/com.microsoft.office.licensing.helper.plist
+sudo rm -f /Library/PrivilegedHelperTools/com.microsoft.office.licensing.helper
+sudo rm -f /Library/Preferences/com.microsoft.office.licensing.plist
+sudo rm -rf /Library/Application<span class="se">\ </span>Support/Microsoft
+sudo rm -rf ~/Library/Application<span class="se">\ </span>Support/Microsoft
+sudo rm -rf /Library/Fonts/Microsoft
+
+pkgutil --pkgs <span class="p">|</span> fgrep com.microsoft.office <span class="p">|</span>
+ sudo xargs -n1 pkgutil --forget
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

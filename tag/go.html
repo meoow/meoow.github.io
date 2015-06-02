@@ -21,34 +21,52 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/struct-reflect.html">struct reflect</a></h1>
+                    <h1 class="entry-title"><a href="/go-mian-fqxia-zai-di-san-fang-package.html">Go: 免FQ下载第三方Package</a></h1>
 <footer class="post-info">
-        <span>Wed 25 June 2014</span>
-<span>| tags: <a href="/tag/go.html">go</a></span>
-</footer><!-- /.post-info --><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+        <span>Wed 04 February 2015</span>
+<span>| tags: <a href="/tag/go.html">Go</a></span>
+</footer><!-- /.post-info --><p>遇到依赖 golang/x/ 或 code.google.com/p/ 下托管代码的包下载不下来是一件很闹心的事情，原因你当然知道。</p>
+<p>好在http://gopm.io/这里提供了\代\理下载这些包的功能，省去了FQ的麻烦。</p>
+<p>虽然没了.git之类的版本控制信息，但是好在能下载下来也就别要什么自行车了。</p>
+<p>不过，懒癌晚期的我觉得连打开gopm.io页面，填上包名，点击下载按钮都觉得是麻烦的事，</p>
+<p>于是写了个bash函数直接从命令行下载</p>
+<div class="highlight"><pre>gopmget<span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">[[</span> -z <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> <span class="o">]]</span><span class="p">;</span><span class="k">then</span>
+    <span class="k">return</span> 1
+  <span class="k">fi</span>
+  curl -sL <span class="s1">&#39;http://gopm.io/download&#39;</span> <span class="se">\</span>
+    -H <span class="s1">&#39;Host: gopm.io&#39;</span> <span class="se">\</span>
+    -H <span class="s1">&#39;Referer: http://gopm.io/download?pkgname=&#39;</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> <span class="se">\</span>
+    --data-urlencode <span class="s1">&#39;pkgname=&#39;</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> --data <span class="s1">&#39;revision=&#39;</span> &gt; <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="p">##*/</span><span class="si">}</span><span class="s2">.zip&quot;</span>
+<span class="o">}</span>
+</pre></div>
 
-<span class="kn">import</span> <span class="p">(</span>
-    <span class="s">&quot;fmt&quot;</span>
-    <span class="s">&quot;reflect&quot;</span>
-<span class="p">)</span>
 
-<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">x</span> <span class="o">:=</span> <span class="kd">struct</span> <span class="p">{</span>
-        <span class="nx">Foo</span> <span class="kt">string</span>
-        <span class="nx">Bar</span> <span class="kt">int</span>
-    <span class="p">}{</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span>
+<p>使用例子：</p>
+<div class="highlight"><pre>gopmget golang.org/x/tools
+</pre></div>
 
-    <span class="nx">t</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">TypeOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
-    <span class="nx">v</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">ValueOf</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
-    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nb">make</span><span class="p">([]</span><span class="kd">struct</span><span class="p">{},</span> <span class="nx">t</span><span class="p">.</span><span class="nx">NumField</span><span class="p">())</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">Field</span><span class="p">(</span><span class="nx">i</span><span class="p">).</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">FieldByName</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">Field</span><span class="p">(</span><span class="nx">i</span><span class="p">).</span><span class="nx">Name</span><span class="p">).</span><span class="nx">Interface</span><span class="p">())</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>                </article>
+
+<p>然后把tools.zip文件解压到$GOPATH/src/golang.org/x/，然后重命名文件夹即可。</p>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
                     <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/struct-reflect.html" rel="bookmark"
+                           title="Permalink to struct reflect">struct reflect</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Wed 25 June 2014</span>
+<span>| tags: <a href="/tag/go.html">go</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/struct-reflect.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

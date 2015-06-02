@@ -514,7 +514,126 @@ resize&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
 &lt;p&gt;http://pan.baidu.com/s/1bnF1duv&lt;/p&gt;</summary><category term=""></category></entry><entry><title>WizNote 2.1.17 for Raspbian</title><link href="/wiznote-2117-for-raspbian.html" rel="alternate"></link><updated>2015-05-12T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-05-12:wiznote-2117-for-raspbian.html</id><summary type="html">&lt;p&gt;&lt;img alt="screen shot" src="/img/wiznote_ss.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Install 'libqtwebkit4' first&lt;/p&gt;
 &lt;p&gt;Download:&lt;br /&gt;
-&lt;a href="http://pan.baidu.com/s/1eQo2Btg"&gt;WizNote 2.1.17 armhf&lt;/a&gt;&lt;/p&gt;</summary><category term=""></category></entry><entry><title>struct reflect</title><link href="/struct-reflect.html" rel="alternate"></link><updated>2015-05-11T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2014-06-25:struct-reflect.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
+&lt;a href="http://pan.baidu.com/s/1eQo2Btg"&gt;WizNote 2.1.17 armhf&lt;/a&gt;&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Go wrapper for hqx</title><link href="/go-wrapper-for-hqx.html" rel="alternate"></link><updated>2015-06-02T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-02-23:go-wrapper-for-hqx.html</id><summary type="html">&lt;p&gt;因为手欠，把OSX系统的所有@2x分辨率的图片都删了，并软链接到1倍大的图片，因为以为我的air屏幕既然不是retina的，自然留着2倍的图片没有用。&lt;/p&gt;
+&lt;p&gt;结果删完发现，很多应用程序的界面显示不正常了，想不到不是retina屏幕系统竟然也用2倍分辨率的图片显示界面。&lt;/p&gt;
+&lt;p&gt;于是只好批量把1倍的图片批量放大还原回去，用ffmpeg就能搞定，不过就算使用效果比较好的滤镜如lanczos，显示还是有些模糊，&lt;/p&gt;
+&lt;p&gt;网上搜了一下发现这类界面图片用HQx算法放大效果最好，&lt;/p&gt;
+&lt;p&gt;HQx滤镜其实在模拟器上见得最多，的确是效果非常好的放大滤镜，&lt;/p&gt;
+&lt;p&gt;我找到了个C的实现，不过编译需要devil库支持命令行，这个库clang死活编译不过去，只能gcc，&lt;/p&gt;
+&lt;p&gt;于是我研究了下hqx的源码，用Go做了个包装，用起来就方便多了&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/meoow/hqx"&gt;源码地址&lt;/a&gt;&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Donated 10 bucks to Mozilla.</title><link href="/donated-10-bucks-to-mozilla.html" rel="alternate"></link><updated>2015-06-02T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-02-20:donated-10-bucks-to-mozilla.html</id><summary type="html">&lt;p&gt;春节既不抢红包，也不发红包，没兴趣凑那个热闹，不管钱多钱少，我一直说有闲钱就直接捐给开源软件基金会，当然也不是只说说而已。   &lt;/p&gt;
+&lt;p&gt;又给Mozilla捐了10刀，钱不多（多了我也有经济压力），也没有什么炫耀之类的意思（又没有人知道我真人是谁，炫耀给谁看），希望Mozilla更好发展，干死Chrome和IE。    &lt;/p&gt;</summary><category term="Mozilla"></category><category term="Firefox"></category></entry><entry><title>限制Android设备的全局下载速度</title><link href="/xian-zhi-androidshe-bei-de-quan-ju-xia-zai-su-du.html" rel="alternate"></link><updated>2015-06-02T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-02-20:xian-zhi-androidshe-bei-de-quan-ju-xia-zai-su-du.html</id><summary type="html">&lt;p&gt;在家里用一个Android的“mini pc”当下载器用，运行离线迅雷，aria2，BT等服务。当然，还有百度云的客户端，不过百度云的客户端没有限速功能，下载时导致上网速度比较慢，于是想到了android的全局限速。&lt;/p&gt;
+&lt;p&gt;虽然android 上又tc命令，但是似乎没法照搬Linux下的配置方法，（当然，也是由于我对tc的了解只有照搬的程度）&lt;/p&gt;
+&lt;p&gt;于是在google play上搜了一下，竟然又这样的应用，还是免费的。&lt;/p&gt;
+&lt;p&gt;试了下果然好用（需要root权限，这也是显而易见），在这里给大家提供一下：&lt;/p&gt;
+&lt;p&gt;BradyBound --&lt;/p&gt;
+&lt;p&gt;http://pan.baidu.com/s/1ntza9z7&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Android: 重启后保持开发者选项中的后台进程限制数</title><link href="/android-zhong-qi-hou-bao-chi-kai-fa-zhe-xuan-xiang-zhong-de-hou-tai-jin-cheng-xian-zhi-shu.html" rel="alternate"></link><updated>2015-06-02T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-02-09:android-zhong-qi-hou-bao-chi-kai-fa-zhe-xuan-xiang-zhong-de-hou-tai-jin-cheng-xian-zhi-shu.html</id><summary type="html">&lt;p&gt;Android的开发者选项(developer options)有一个后台进程限制选项(background process limit)，可以用来限制后台运行的应用进程个数，设置了该选项在重启后会复位，不能够保存。&lt;/p&gt;
+&lt;p&gt;https://github.com/flode/SetAndroidProcessLimit&lt;/p&gt;
+&lt;p&gt;这里有人实现了重启可以保存该选项，另外进程数的限制也由原来的只能0-4提高到0-7之间。&lt;/p&gt;
+&lt;p&gt;支持4.0以上，直接下载里面的apk，安装需要root权限，拷贝到/system/priv-app下面，重启后进入该应用设置即可。&lt;/p&gt;
+&lt;p&gt;我测试了一下确实可用&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>Go: 免FQ下载第三方Package</title><link href="/go-mian-fqxia-zai-di-san-fang-package.html" rel="alternate"></link><updated>2015-06-02T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-02-04:go-mian-fqxia-zai-di-san-fang-package.html</id><summary type="html">&lt;p&gt;遇到依赖 golang/x/ 或 code.google.com/p/ 下托管代码的包下载不下来是一件很闹心的事情，原因你当然知道。&lt;/p&gt;
+&lt;p&gt;好在http://gopm.io/这里提供了\代\理下载这些包的功能，省去了FQ的麻烦。&lt;/p&gt;
+&lt;p&gt;虽然没了.git之类的版本控制信息，但是好在能下载下来也就别要什么自行车了。&lt;/p&gt;
+&lt;p&gt;不过，懒癌晚期的我觉得连打开gopm.io页面，填上包名，点击下载按钮都觉得是麻烦的事，&lt;/p&gt;
+&lt;p&gt;于是写了个bash函数直接从命令行下载&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;gopmget&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; -z &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; 1
+  &lt;span class="k"&gt;fi&lt;/span&gt;
+  curl -sL &lt;span class="s1"&gt;&amp;#39;http://gopm.io/download&amp;#39;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+    -H &lt;span class="s1"&gt;&amp;#39;Host: gopm.io&amp;#39;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+    -H &lt;span class="s1"&gt;&amp;#39;Referer: http://gopm.io/download?pkgname=&amp;#39;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+    --data-urlencode &lt;span class="s1"&gt;&amp;#39;pkgname=&amp;#39;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; --data &lt;span class="s1"&gt;&amp;#39;revision=&amp;#39;&lt;/span&gt; &amp;gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="p"&gt;##*/&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;.zip&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用例子：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;gopmget golang.org/x/tools
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后把tools.zip文件解压到$GOPATH/src/golang.org/x/，然后重命名文件夹即可。&lt;/p&gt;</summary><category term="Go"></category></entry><entry><title>挂载KVM虚拟机的磁盘镜像</title><link href="/gua-zai-kvmxu-ni-ji-de-ci-pan-jing-xiang.html" rel="alternate"></link><updated>2015-06-02T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-02-02:gua-zai-kvmxu-ni-ji-de-ci-pan-jing-xiang.html</id><summary type="html">&lt;p&gt;使用kvm(qemu)虚拟机相对于Virtualbox或VMWARE没有共享目录可以设置，导出文件麻烦一些，用samba显然与直接读取磁盘相比虚度慢不少。&lt;/p&gt;
+&lt;p&gt;解决办法之一是直接挂载虚拟磁盘访问即可，这种方法在红帽的官方文档里给出了说明：&lt;/p&gt;
+&lt;p&gt;使用kpartx工具，可以读取磁盘镜像的分区表，创建设备映射。&lt;/p&gt;
+&lt;p&gt;虚拟机处于关机状态&lt;/p&gt;
+&lt;p&gt;查看虚拟磁盘的分区，例子里的磁盘有两个分区&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# kpartx -l /var/lib/libvirt/images/guest1.img
+
+loop0p1 : 0 409600 /dev/loop0 63
+loop0p2 : 0 10064717 /dev/loop0 409663
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;将分区映射到/dev/mapper下&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# kpartx -av /var/lib/libvirt/images/guest1.img
+
+
+# ls /dev/mapper/loop
+loop0p1
+loop0p2
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;以loop设备挂载我们想要的分区&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# mkdir /mnt/guest1
+# mount /dev/mapper/loop0p1 /mnt/guest1 -o loop
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;处理完毕后，卸载&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# umount /mnt/tmp
+# kpartx -d /var/lib/libvirt/images/guest1.img
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;红帽文档里还提到了如果包含LVM的话，kpartx做映射后，用vgchange -ay激活VG，再用mount挂载LV。&lt;/p&gt;</summary><category term=""></category></entry><entry><title>彻底卸载Office</title><link href="/che-di-xie-zai-office.html" rel="alternate"></link><updated>2015-06-02T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-01-29:che-di-xie-zai-office.html</id><summary type="html">&lt;p&gt;用SP包升级会搞得比较乱套，不如先将老版本卸载掉，再装集成最新SP的安装，所以我将官方给出的步骤集合在了一起&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+
+sudo rm -rf /Applications/Microsoft&lt;span class="se"&gt;\ &lt;/span&gt;Office&lt;span class="se"&gt;\ &lt;/span&gt;2011
+sudo rm -f ~/Library/Preferences/com.microsoft.*
+sudo rm -f /Library/LaunchDaemons/com.microsoft.office.licensing.helper.plist
+sudo rm -f /Library/PrivilegedHelperTools/com.microsoft.office.licensing.helper
+sudo rm -f /Library/Preferences/com.microsoft.office.licensing.plist
+sudo rm -rf /Library/Application&lt;span class="se"&gt;\ &lt;/span&gt;Support/Microsoft
+sudo rm -rf ~/Library/Application&lt;span class="se"&gt;\ &lt;/span&gt;Support/Microsoft
+sudo rm -rf /Library/Fonts/Microsoft
+
+pkgutil --pkgs &lt;span class="p"&gt;|&lt;/span&gt; fgrep com.microsoft.office &lt;span class="p"&gt;|&lt;/span&gt;
+ sudo xargs -n1 pkgutil --forget
+&lt;/pre&gt;&lt;/div&gt;</summary><category term=""></category></entry><entry><title>Linux下使用迅雷的“另辟蹊径”</title><link href="/linuxxia-shi-yong-xun-lei-de-ling-pi-xi-jing.html" rel="alternate"></link><updated>2015-06-02T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-01-28:linuxxia-shi-yong-xun-lei-de-ling-pi-xi-jing.html</id><summary type="html">&lt;p&gt;尽管平时用Firefox + Flashgot + Aria2(RPC) 的方式下载文件比用渣迅雷靠谱多了， 我个人这几年也不怎么常用迅雷，但是有些时候一些老资源还是用迅雷能搞定。 &lt;/p&gt;
+&lt;p&gt;迅雷出的远程下载我一开始以为只有专门的路由器才支持， 后来才知道其实有它客户端，面向嵌入式的Linux都可以跑，最近火星的才知道原来这货有X86版。转念一想这样其实不是就可以相当于在Linux PC上运行迅雷了么， 可以同时支持利用离线和高速通道下载。 &lt;/p&gt;
+&lt;h3&gt;准备：&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo mkdir /mnt/xunlei
+
+sudo mount -o &lt;span class="nb"&gt;bind&lt;/span&gt; ~/Downloads /mnt/xunlei
+
+&lt;span class="c"&gt;# 这里是客户端设计的一个脑残之处，没法自定义下载路径，而是自动收集所有/mnt和/media/下的挂载点（只建立目录是没有用的）。 如果没有外接磁盘挂载到这里，就没有了下载路径，于是只好把家目录的Downloads文件夹挂载到/mnt/xunlei，“伪装”一个挂载点。想要以后自动挂载可以在/etc/fstab里添加条目。&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;运行:&lt;/h3&gt;
+&lt;p&gt;在 http://luyou.xunlei.com/thread-12545-1-1.html 下载xware的x86架构的版本，只有32位的，所以64位的发行版需要装32位的glibc和zlib。&lt;/p&gt;
+&lt;p&gt;下载解压到一个固定目录，运行./portal，由于并不监听1024以下的端口，所以不需要root权限。&lt;/p&gt;
+&lt;p&gt;在次数不固定的“the active key is not valid.”报错之后，会得到一个“ACTIVE CODE”，然后去远程下载页面， 登入后添加设备把这个码填入即可。&lt;/p&gt;
+&lt;p&gt;远程下载不方便的一点是没有什么API开放，也就没简单方便的编程实现来跟浏览器相结合，只能下载链接手动复制粘贴的方式添加下载任务。&lt;/p&gt;
+&lt;p&gt;如果远程也有像离线的https://github.com/iambus/xunlei-lixian这样的工具就好了。&lt;/p&gt;</summary><category term=""></category></entry><entry><title>免验证码下载itpub附件</title><link href="/mian-yan-zheng-ma-xia-zai-itpubfu-jian.html" rel="alternate"></link><updated>2015-06-02T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-01-23:mian-yan-zheng-ma-xia-zai-itpubfu-jian.html</id><summary type="html">&lt;p&gt;stdin输入一行一个附件链接，Ctrl+D后会调用curl开始下载(希望显示下载进度，还得在header里读取文件名，懒得用urllib2搞了)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python2.7&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;re&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;subprocess&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;subp&lt;/span&gt;
+
+&lt;span class="n"&gt;ptn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;r&amp;#39;^{0}([\w\d]+)&amp;amp;fid=61$&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;escape&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;r&amp;#39;http://www.itpub.net/attachment.php?aid=&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stdin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;mat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ptn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;match&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;mat&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;filelink&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;http://www.itpub.net/forum.php?mod=attachment&amp;amp;aid={0}==&amp;amp;fid=61&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;group&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="n"&gt;subp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;curl&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-JOL&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filelink&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term=""></category></entry><entry><title>struct reflect</title><link href="/struct-reflect.html" rel="alternate"></link><updated>2015-05-11T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2014-06-25:struct-reflect.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="s"&gt;&amp;quot;fmt&amp;quot;&lt;/span&gt;

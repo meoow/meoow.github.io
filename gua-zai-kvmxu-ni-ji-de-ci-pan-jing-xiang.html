@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>挂载KVM虚拟机的磁盘镜像</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/gua-zai-kvmxu-ni-ji-de-ci-pan-jing-xiang.html" rel="bookmark"
+           title="Permalink to 挂载KVM虚拟机的磁盘镜像">挂载KVM虚拟机的磁盘镜像</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 02 February 2015</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->      <p>使用kvm(qemu)虚拟机相对于Virtualbox或VMWARE没有共享目录可以设置，导出文件麻烦一些，用samba显然与直接读取磁盘相比虚度慢不少。</p>
+<p>解决办法之一是直接挂载虚拟磁盘访问即可，这种方法在红帽的官方文档里给出了说明：</p>
+<p>使用kpartx工具，可以读取磁盘镜像的分区表，创建设备映射。</p>
+<p>虚拟机处于关机状态</p>
+<p>查看虚拟磁盘的分区，例子里的磁盘有两个分区</p>
+<div class="highlight"><pre># kpartx -l /var/lib/libvirt/images/guest1.img
+
+loop0p1 : 0 409600 /dev/loop0 63
+loop0p2 : 0 10064717 /dev/loop0 409663
+</pre></div>
+
+
+<p>将分区映射到/dev/mapper下</p>
+<div class="highlight"><pre># kpartx -av /var/lib/libvirt/images/guest1.img
+
+
+# ls /dev/mapper/loop
+loop0p1
+loop0p2
+</pre></div>
+
+
+<p>以loop设备挂载我们想要的分区</p>
+<div class="highlight"><pre># mkdir /mnt/guest1
+# mount /dev/mapper/loop0p1 /mnt/guest1 -o loop
+</pre></div>
+
+
+<p>处理完毕后，卸载</p>
+<div class="highlight"><pre># umount /mnt/tmp
+# kpartx -d /var/lib/libvirt/images/guest1.img
+</pre></div>
+
+
+<p>红帽文档里还提到了如果包含LVM的话，kpartx做映射后，用vgchange -ay激活VG，再用mount挂载LV。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

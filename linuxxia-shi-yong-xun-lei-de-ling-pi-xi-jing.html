@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Linux下使用迅雷的“另辟蹊径”</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/linuxxia-shi-yong-xun-lei-de-ling-pi-xi-jing.html" rel="bookmark"
+           title="Permalink to Linux下使用迅雷的“另辟蹊径”">Linux下使用迅雷的“另辟蹊径”</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Wed 28 January 2015</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->      <p>尽管平时用Firefox + Flashgot + Aria2(RPC) 的方式下载文件比用渣迅雷靠谱多了， 我个人这几年也不怎么常用迅雷，但是有些时候一些老资源还是用迅雷能搞定。 </p>
+<p>迅雷出的远程下载我一开始以为只有专门的路由器才支持， 后来才知道其实有它客户端，面向嵌入式的Linux都可以跑，最近火星的才知道原来这货有X86版。转念一想这样其实不是就可以相当于在Linux PC上运行迅雷了么， 可以同时支持利用离线和高速通道下载。 </p>
+<h3>准备：</h3>
+<div class="highlight"><pre>sudo mkdir /mnt/xunlei
+
+sudo mount -o <span class="nb">bind</span> ~/Downloads /mnt/xunlei
+
+<span class="c"># 这里是客户端设计的一个脑残之处，没法自定义下载路径，而是自动收集所有/mnt和/media/下的挂载点（只建立目录是没有用的）。 如果没有外接磁盘挂载到这里，就没有了下载路径，于是只好把家目录的Downloads文件夹挂载到/mnt/xunlei，“伪装”一个挂载点。想要以后自动挂载可以在/etc/fstab里添加条目。</span>
+</pre></div>
+
+
+<h3>运行:</h3>
+<p>在 http://luyou.xunlei.com/thread-12545-1-1.html 下载xware的x86架构的版本，只有32位的，所以64位的发行版需要装32位的glibc和zlib。</p>
+<p>下载解压到一个固定目录，运行./portal，由于并不监听1024以下的端口，所以不需要root权限。</p>
+<p>在次数不固定的“the active key is not valid.”报错之后，会得到一个“ACTIVE CODE”，然后去远程下载页面， 登入后添加设备把这个码填入即可。</p>
+<p>远程下载不方便的一点是没有什么API开放，也就没简单方便的编程实现来跟浏览器相结合，只能下载链接手动复制粘贴的方式添加下载任务。</p>
+<p>如果远程也有像离线的https://github.com/iambus/xunlei-lixian这样的工具就好了。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

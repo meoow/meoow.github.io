@@ -23,6 +23,166 @@
                     <ol id="posts-list" class="hfeed" start="19">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="/multi-upload.html" rel="bookmark"
+                           title="Permalink to Multi Upload">Multi Upload</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Tue 24 June 2014</span>
+<span>| tags: <a href="/tag/go.html">go</a></span>
+</footer><!-- /.post-info -->                <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;io&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;mime/multipart&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+    <span class="s">&quot;path/filepath&quot;</span>
+    <span class="s">&quot;runtime&quot;</span>
+
+    <span class="s">&quot;github.com/cheggaaa/pb&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Usage: pipeUp &lt;filename&gt;\n&quot;</span><span class="p">)</span>
+        <span class="nx">os</span><span class="p">.</span><span class="nx">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="nx">input</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="k">defer</span> <span class="nx">input</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="nx">stat</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">Stat</span><span class="p">()</span>
+    <span class="nx">check ...</span></pre></div>
+                <a class="readmore" href="/multi-upload.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/uefixi-tong-shi-yong-grub2yin-dao-slaxde-fang-fa-jie-shao.html" rel="bookmark"
+                           title="Permalink to UEFI系统使用GRUB2引导Slax的方法介绍">UEFI系统使用GRUB2引导Slax的方法介绍</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/uefi.html">uefi</a><a href="/tag/grub2.html">grub2</a><a href="/tag/slax.html">slax</a><a href="/tag/linux.html">linux</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/uefixi-tong-shi-yong-grub2yin-dao-slaxde-fang-fa-jie-shao.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/osxshang-qing-li-appde-da-kai-wen-jian-lei-xing.html" rel="bookmark"
+                           title="Permalink to OSX上清理app的打开文件类型">OSX上清理app的打开文件类型</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/os-x.html">OS X</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/osxshang-qing-li-appde-da-kai-wen-jian-lei-xing.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/chun-bashlai-huo-qu-wen-jian-de-jue-dui-lu-jing.html" rel="bookmark"
+                           title="Permalink to 纯Bash来获取文件的绝对路径">纯Bash来获取文件的绝对路径</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/linux.html">Linux</a><a href="/tag/bash.html">Bash</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/chun-bashlai-huo-qu-wen-jian-de-jue-dui-lu-jing.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/dylibbundler-mac-osxshang-de-ruan-jian-bian-xi-hua-gong-ju.html" rel="bookmark"
+                           title="Permalink to dylibbundler - Mac OSX上的软件便携化工具">dylibbundler - Mac OSX上的软件便携化工具</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/os-x.html">OS X</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/dylibbundler-mac-osxshang-de-ruan-jian-bian-xi-hua-gong-ju.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/qie-huan-iosxia-appde-hou-tai-yun-xing-mo-shi.html" rel="bookmark"
+                           title="Permalink to 切换IOS下APP的后台运行模式">切换IOS下APP的后台运行模式</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/ios.html">iOS</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/qie-huan-iosxia-appde-hou-tai-yun-xing-mo-shi.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/fen-xiang-yi-xia-jie-jue-bu-neng-fang-wen-gong-xiang-mu-lu-de-fang-fa.html" rel="bookmark"
+                           title="Permalink to 分享一下解决不能访问共享目录的方法">分享一下解决不能访问共享目录的方法</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/linux.html">Linux</a><a href="/tag/virtualbox.html">VirtualBox</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/fen-xiang-yi-xia-jie-jue-bu-neng-fang-wen-gong-xiang-mu-lu-de-fang-fa.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/osxfang-zhi-ruan-jian-lian-wang-de-fang-fa-jian-jie.html" rel="bookmark"
+                           title="Permalink to OSX防止软件联网的方法简介">OSX防止软件联网的方法简介</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/os-x.html">OS X</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/osxfang-zhi-ruan-jian-lian-wang-de-fang-fa-jian-jie.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/wang-ye-zi-yuan-qian-ru-html.html" rel="bookmark"
+                           title="Permalink to 网页资源嵌入html">网页资源嵌入html</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 16 June 2014</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/wang-ye-zi-yuan-qian-ru-html.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="/ru-he-bu-an-zhuang-flashcheng-xu-lai-an-zhuang-flashcha-jian.html" rel="bookmark"
                            title="Permalink to 如何不“安装”Flash程序来“安装”Flash插件">如何不“安装”Flash程序来“安装”Flash插件</a></h1>
                 </header>

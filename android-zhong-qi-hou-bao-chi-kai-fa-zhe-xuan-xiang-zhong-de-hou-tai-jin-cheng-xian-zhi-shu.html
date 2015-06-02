@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Android: 重启后保持开发者选项中的后台进程限制数</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/android-zhong-qi-hou-bao-chi-kai-fa-zhe-xuan-xiang-zhong-de-hou-tai-jin-cheng-xian-zhi-shu.html" rel="bookmark"
+           title="Permalink to Android: 重启后保持开发者选项中的后台进程限制数">Android: 重启后保持开发者选项中的后台进程限制数</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 09 February 2015</span>
+<span>| tags: <a href="/tag/android.html">Android</a></span>
+</footer><!-- /.post-info -->      <p>Android的开发者选项(developer options)有一个后台进程限制选项(background process limit)，可以用来限制后台运行的应用进程个数，设置了该选项在重启后会复位，不能够保存。</p>
+<p>https://github.com/flode/SetAndroidProcessLimit</p>
+<p>这里有人实现了重启可以保存该选项，另外进程数的限制也由原来的只能0-4提高到0-7之间。</p>
+<p>支持4.0以上，直接下载里面的apk，安装需要root权限，拷贝到/system/priv-app下面，重启后进入该应用设置即可。</p>
+<p>我测试了一下确实可用</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

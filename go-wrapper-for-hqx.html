@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Go wrapper for hqx</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/go-wrapper-for-hqx.html" rel="bookmark"
+           title="Permalink to Go wrapper for hqx">Go wrapper for hqx</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 23 February 2015</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->      <p>因为手欠，把OSX系统的所有@2x分辨率的图片都删了，并软链接到1倍大的图片，因为以为我的air屏幕既然不是retina的，自然留着2倍的图片没有用。</p>
+<p>结果删完发现，很多应用程序的界面显示不正常了，想不到不是retina屏幕系统竟然也用2倍分辨率的图片显示界面。</p>
+<p>于是只好批量把1倍的图片批量放大还原回去，用ffmpeg就能搞定，不过就算使用效果比较好的滤镜如lanczos，显示还是有些模糊，</p>
+<p>网上搜了一下发现这类界面图片用HQx算法放大效果最好，</p>
+<p>HQx滤镜其实在模拟器上见得最多，的确是效果非常好的放大滤镜，</p>
+<p>我找到了个C的实现，不过编译需要devil库支持命令行，这个库clang死活编译不过去，只能gcc，</p>
+<p>于是我研究了下hqx的源码，用Go做了个包装，用起来就方便多了</p>
+<p><a href="https://github.com/meoow/hqx">源码地址</a></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

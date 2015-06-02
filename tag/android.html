@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>meoow - android</title>
+        <title>meoow - Android</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -21,21 +21,38 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/gua-zai-mtpde-androidshe-bei-de-gong-ju-go-mptfs.html">挂载MTP的android设备的工具----go-mptfs</a></h1>
+                    <h1 class="entry-title"><a href="/android-zhong-qi-hou-bao-chi-kai-fa-zhe-xuan-xiang-zhong-de-hou-tai-jin-cheng-xian-zhi-shu.html">Android: 重启后保持开发者选项中的后台进程限制数</a></h1>
+<footer class="post-info">
+        <span>Mon 09 February 2015</span>
+<span>| tags: <a href="/tag/android.html">Android</a></span>
+</footer><!-- /.post-info --><p>Android的开发者选项(developer options)有一个后台进程限制选项(background process limit)，可以用来限制后台运行的应用进程个数，设置了该选项在重启后会复位，不能够保存。</p>
+<p>https://github.com/flode/SetAndroidProcessLimit</p>
+<p>这里有人实现了重启可以保存该选项，另外进程数的限制也由原来的只能0-4提高到0-7之间。</p>
+<p>支持4.0以上，直接下载里面的apk，安装需要root权限，拷贝到/system/priv-app下面，重启后进入该应用设置即可。</p>
+<p>我测试了一下确实可用</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/gua-zai-mtpde-androidshe-bei-de-gong-ju-go-mptfs.html" rel="bookmark"
+                           title="Permalink to 挂载MTP的android设备的工具----go-mptfs">挂载MTP的android设备的工具----go-mptfs</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <span>Wed 11 June 2014</span>
 <span>| tags: <a href="/tag/android.html">android</a><a href="/tag/mtp.html">mtp</a><a href="/tag/go.html">go</a></span>
-</footer><!-- /.post-info --><p>在Linux下，不能原生挂载MTP设备，OSX下的Android File Transfer也是BUG成堆。
-基于libmtp的mtpfs或基于adb的adbfs利用fuse挂载，性能很差还不稳定。</p>
-<p>无意间发现了个霸道的项目
-https://github.com/hanwen/go-mtpfs
-用Go实现的mtpfs，使用了感觉性能很好，可以满足了。
-作者应该是只为Linux开发的，不过我试验了，在OSX下用homebrew安装了libusb和osxfuse以后，也可以编译通过和正常使用，不过貌似性能没有Linux下好？也许是fuse的问题？</p>                </article>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/gua-zai-mtpde-androidshe-bei-de-gong-ju-go-mptfs.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+            </ol><!-- /#posts-list -->
 <p class="paginator">
     Page 1 / 1
 </p>
-            </aside><!-- /#featured -->
-            </ol><!-- /#posts-list -->
             </section><!-- /#content -->
         <section id="extras" class="body">
         </section><!-- /#extras -->
