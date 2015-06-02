@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>meoow</title><link>/</link><description></description><atom:link href="/feeds/meoow.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 12 May 2015 00:00:00 +0000</lastBuildDate><item><title>resize images in given size using ffmpeg</title><link>/resize-images-in-given-size-using-ffmpeg.html</link><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>meoow</title><link>/</link><description></description><atom:link href="/feeds/meoow.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 02 Jun 2015 00:00:00 +0000</lastBuildDate><item><title>Thunderbird使用Gmail需要用到的FoxyProxy规则</title><link>/thunderbirdshi-yong-gmailxu-yao-yong-dao-de-foxyproxygui-ze.html</link><description>&lt;p&gt;Thunderbird使用FoxyProxy时，因为只是连接邮件服务器即可，所以并不需要像Firefox一样，更新一个很长的GƒW列表。更准确的说只要把Gmail的情况匹配即可。&lt;/p&gt;
+&lt;p&gt;经过的我试验调整，暂时只用如下三条规则即可正常使用Gmail：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;^https?://([a-z0-9-_]+\.)?g(oogle(mail|code|usercontent|apis|syndication|-analytics)?|static|mail)\.(com(\.[a-z]{2})?|cn)(/.*)?$
+
+^imap://imap.googlemail.com:\d+(/.*)?$
+
+^mailto://[^/@]+@smtp.googlemail.com:\d+(/.*)?$
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;第一个是匹配Google的各种服务，第二个是收邮件用，第三个是发邮件用。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meoow</dc:creator><pubDate>Tue, 02 Jun 2015 00:00:00 +0000</pubDate><guid>tag:,2015-06-02:thunderbirdshi-yong-gmailxu-yao-yong-dao-de-foxyproxygui-ze.html</guid><category></category></item><item><title>resize images in given size using ffmpeg</title><link>/resize-images-in-given-size-using-ffmpeg.html</link><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 
 &lt;span class="nb"&gt;shopt&lt;/span&gt; -s extglob
 

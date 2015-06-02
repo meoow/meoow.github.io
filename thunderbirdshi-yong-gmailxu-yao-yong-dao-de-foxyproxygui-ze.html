@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Thunderbird使用Gmail需要用到的FoxyProxy规则</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">meoow </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/article.html">Article</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/thunderbirdshi-yong-gmailxu-yao-yong-dao-de-foxyproxygui-ze.html" rel="bookmark"
+           title="Permalink to Thunderbird使用Gmail需要用到的FoxyProxy规则">Thunderbird使用Gmail需要用到的FoxyProxy规则</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Tue 02 June 2015</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->      <p>Thunderbird使用FoxyProxy时，因为只是连接邮件服务器即可，所以并不需要像Firefox一样，更新一个很长的GƒW列表。更准确的说只要把Gmail的情况匹配即可。</p>
+<p>经过的我试验调整，暂时只用如下三条规则即可正常使用Gmail：</p>
+<div class="highlight"><pre>^https?://([a-z0-9-_]+\.)?g(oogle(mail|code|usercontent|apis|syndication|-analytics)?|static|mail)\.(com(\.[a-z]{2})?|cn)(/.*)?$
+
+^imap://imap.googlemail.com:\d+(/.*)?$
+
+^mailto://[^/@]+@smtp.googlemail.com:\d+(/.*)?$
+</pre></div>
+
+
+<p>第一个是匹配Google的各种服务，第二个是收邮件用，第三个是发邮件用。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

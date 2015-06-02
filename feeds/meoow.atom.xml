@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>meoow</title><link href="/" rel="alternate"></link><link href="/feeds/meoow.atom.xml" rel="self"></link><id>/</id><updated>2015-05-12T00:00:00+00:00</updated><entry><title>resize images in given size using ffmpeg</title><link href="/resize-images-in-given-size-using-ffmpeg.html" rel="alternate"></link><updated>2015-05-12T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-05-12:resize-images-in-given-size-using-ffmpeg.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>meoow</title><link href="/" rel="alternate"></link><link href="/feeds/meoow.atom.xml" rel="self"></link><id>/</id><updated>2015-06-02T00:00:00+00:00</updated><entry><title>Thunderbird使用Gmail需要用到的FoxyProxy规则</title><link href="/thunderbirdshi-yong-gmailxu-yao-yong-dao-de-foxyproxygui-ze.html" rel="alternate"></link><updated>2015-06-02T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-06-02:thunderbirdshi-yong-gmailxu-yao-yong-dao-de-foxyproxygui-ze.html</id><summary type="html">&lt;p&gt;Thunderbird使用FoxyProxy时，因为只是连接邮件服务器即可，所以并不需要像Firefox一样，更新一个很长的GƒW列表。更准确的说只要把Gmail的情况匹配即可。&lt;/p&gt;
+&lt;p&gt;经过的我试验调整，暂时只用如下三条规则即可正常使用Gmail：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;^https?://([a-z0-9-_]+\.)?g(oogle(mail|code|usercontent|apis|syndication|-analytics)?|static|mail)\.(com(\.[a-z]{2})?|cn)(/.*)?$
+
+^imap://imap.googlemail.com:\d+(/.*)?$
+
+^mailto://[^/@]+@smtp.googlemail.com:\d+(/.*)?$
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;第一个是匹配Google的各种服务，第二个是收邮件用，第三个是发邮件用。&lt;/p&gt;</summary><category term=""></category></entry><entry><title>resize images in given size using ffmpeg</title><link href="/resize-images-in-given-size-using-ffmpeg.html" rel="alternate"></link><updated>2015-05-12T00:00:00+00:00</updated><author><name>meoow</name></author><id>tag:,2015-05-12:resize-images-in-given-size-using-ffmpeg.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 
 &lt;span class="nb"&gt;shopt&lt;/span&gt; -s extglob
 

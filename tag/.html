@@ -21,17 +21,40 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/busybox-w32-rang-ni-de-windowsming-ling-xing-bu-zai-fei-dao-wu-yi-fu-jia.html">busybox-w32 让你的windows命令行不再废到无以复加</a></h1>
+                    <h1 class="entry-title"><a href="/thunderbirdshi-yong-gmailxu-yao-yong-dao-de-foxyproxygui-ze.html">Thunderbird使用Gmail需要用到的FoxyProxy规则</a></h1>
 <footer class="post-info">
-        <span>Tue 12 May 2015</span>
+        <span>Tue 02 June 2015</span>
 <span>| tags: <a href="/tag/.html"></a></span>
-</footer><!-- /.post-info --><p>很多时候都不得不惊叹Windows的命令行为什么会如此残废，写个简单的批处理都需要各种”迂回“策略，根本没有办法让你用正常思维思考，而那个PowerShell则根本就是脑残的另一种境界。
-好在有人把Busybox移植到了Windows上，总算稍微找到了些许顺手的感觉。
-我用去年的版本的时候还没有编译选项里还没有开启unicode支持，所以中文都用问号表示，而昨天晚上下了最新编译的版本，发现终于支持中文显示了，又少了一块绊脚石。</p>                </article>
+</footer><!-- /.post-info --><p>Thunderbird使用FoxyProxy时，因为只是连接邮件服务器即可，所以并不需要像Firefox一样，更新一个很长的GƒW列表。更准确的说只要把Gmail的情况匹配即可。</p>
+<p>经过的我试验调整，暂时只用如下三条规则即可正常使用Gmail：</p>
+<div class="highlight"><pre>^https?://([a-z0-9-_]+\.)?g(oogle(mail|code|usercontent|apis|syndication|-analytics)?|static|mail)\.(com(\.[a-z]{2})?|cn)(/.*)?$
+
+^imap://imap.googlemail.com:\d+(/.*)?$
+
+^mailto://[^/@]+@smtp.googlemail.com:\d+(/.*)?$
+</pre></div>
+
+
+<p>第一个是匹配Google的各种服务，第二个是收邮件用，第三个是发邮件用。</p>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
                     <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/busybox-w32-rang-ni-de-windowsming-ling-xing-bu-zai-fei-dao-wu-yi-fu-jia.html" rel="bookmark"
+                           title="Permalink to busybox-w32 让你的windows命令行不再废到无以复加">busybox-w32 让你的windows命令行不再废到无以复加</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Tue 12 May 2015</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/busybox-w32-rang-ni-de-windowsming-ling-xing-bu-zai-fei-dao-wu-yi-fu-jia.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

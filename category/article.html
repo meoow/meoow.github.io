@@ -21,36 +21,40 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/resize-images-in-given-size-using-ffmpeg.html">resize images in given size using ffmpeg</a></h1>
+                    <h1 class="entry-title"><a href="/thunderbirdshi-yong-gmailxu-yao-yong-dao-de-foxyproxygui-ze.html">Thunderbird使用Gmail需要用到的FoxyProxy规则</a></h1>
 <footer class="post-info">
-        <span>Tue 12 May 2015</span>
-<span>| tags: <a href="/tag/bash.html">Bash</a><a href="/tag/ffmpeg.html">FFmpeg</a></span>
-</footer><!-- /.post-info --><div class="highlight"><pre><span class="c">#!/bin/bash</span>
+        <span>Tue 02 June 2015</span>
+<span>| tags: <a href="/tag/.html"></a></span>
+</footer><!-- /.post-info --><p>Thunderbird使用FoxyProxy时，因为只是连接邮件服务器即可，所以并不需要像Firefox一样，更新一个很长的GƒW列表。更准确的说只要把Gmail的情况匹配即可。</p>
+<p>经过的我试验调整，暂时只用如下三条规则即可正常使用Gmail：</p>
+<div class="highlight"><pre>^https?://([a-z0-9-_]+\.)?g(oogle(mail|code|usercontent|apis|syndication|-analytics)?|static|mail)\.(com(\.[a-z]{2})?|cn)(/.*)?$
 
-<span class="nb">shopt</span> -s extglob
+^imap://imap.googlemail.com:\d+(/.*)?$
 
-<span class="nv">width</span><span class="o">=</span>320
-<span class="nv">height</span><span class="o">=</span>240
+^mailto://[^/@]+@smtp.googlemail.com:\d+(/.*)?$
+</pre></div>
 
-resize<span class="o">()</span> <span class="o">{</span>
- ffmpeg -loglevel error -y -i <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> -c:v mjpeg -q:v <span class="m">0</span> -frames:v <span class="m">1</span> -vf <span class="nv">scale</span><span class="o">=</span><span class="s2">&quot; &#39;if( gte( (iw/</span><span class="nv">$width</span><span class="s2">)/(ih/</span><span class="nv">$height</span><span class="s2">),1 ), -2, </span><span class="nv">$width</span><span class="s2"> ):if( gte( (iw/</span><span class="nv">$width</span><span class="s2">)/(ih/</span><span class="nv">$height</span><span class="s2">),1 ), </span><span class="nv">$height</span><span class="s2"> , -2)&#39; &quot;</span>,crop<span class="o">=</span><span class="s2">&quot; &#39;min(iw,</span><span class="nv">$width</span><span class="s2">):min(ih,</span><span class="nv">$height</span><span class="s2">):if( eq(iw,</span><span class="nv">$width</span><span class="s2">), 0, (iw-</span><span class="nv">$width</span><span class="s2">)/2+if( eq(iw,</span><span class="nv">$width</span><span class="s2">), 0,</span><span class="nv">$offset</span><span class="s2">) ):if( eq(ih,</span><span class="nv">$height</span><span class="s2">), 0, (ih-</span><span class="nv">$height</span><span class="s2">)/2+if( eq(ih, </span><span class="nv">$height</span><span class="s2">), 0,</span><span class="nv">$offset</span><span class="s2">) )&#39; &quot;</span>,unsharp<span class="o">=</span>3:3:0.45:3:3:0  -sws_flags lanczos -an -sn -f rawvideo <span class="si">${</span><span class="nv">1</span><span class="p">%.+([^.])</span><span class="si">}</span>_resizesharp.jpg
-  <span class="c"># ffmpeg -loglevel error -y -i &quot;$1&quot; -c:v mjpeg -q:v 0 -frames:v 1 -vf scale=&quot; &#39;if( gte( (iw/$width)/(ih/$height),1 ), -2, $width ):if( gte( (iw/$width)/(ih/$height),1 ), $height , -2)&#39; &quot;,crop=&quot; &#39;min(iw,$width):min(ih,$height):if( eq(iw,$width), 0, (iw-$width)/2+if( eq(iw,$width), 0,$offset) ):if( eq(ih,$height), 0, (ih-$height)/2+if( eq(ih, $height), 0,$offset) )&#39; &quot;  -sws_flags lanczos -an -sn -f rawvideo ${1%.+([^.])}_resize.jpg</span>
-<span class="o">}</span>
 
-<span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^-?<span class="o">(</span>0<span class="p">|</span><span class="o">[</span>1-9<span class="o">][</span>0-9<span class="o">]</span>+<span class="o">)</span><span class="nv">$ </span><span class="o">]]</span><span class="p">;</span><span class="k">then</span>
-  <span class="nv">offset</span><span class="o">=</span><span class="nv">$2</span>
-  resize <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
-<span class="k">else</span>
-  <span class="nv">offset</span><span class="o">=</span>0
-  <span class="k">for</span> x in <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="p">;</span><span class="k">do</span>
-    resize <span class="s2">&quot;</span><span class="nv">$x</span><span class="s2">&quot;</span>
-  <span class="k">done</span>
-<span class="k">fi</span>
-</pre></div>                </article>
+<p>第一个是匹配Google的各种服务，第二个是收邮件用，第三个是发邮件用。</p>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
                     <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/resize-images-in-given-size-using-ffmpeg.html" rel="bookmark"
+                           title="Permalink to resize images in given size using ffmpeg">resize images in given size using ffmpeg</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Tue 12 May 2015</span>
+<span>| tags: <a href="/tag/bash.html">Bash</a><a href="/tag/ffmpeg.html">FFmpeg</a></span>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/resize-images-in-given-size-using-ffmpeg.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -363,21 +367,6 @@ resize<span class="o">()</span> <span class="o">{</span>
 <span>| tags: <a href="/tag/.html"></a></span>
 </footer><!-- /.post-info -->                
                 <a class="readmore" href="/wang-ye-zi-yuan-qian-ru-html.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/ru-he-bu-an-zhuang-flashcheng-xu-lai-an-zhuang-flashcha-jian.html" rel="bookmark"
-                           title="Permalink to 如何不“安装”Flash程序来“安装”Flash插件">如何不“安装”Flash程序来“安装”Flash插件</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 16 June 2014</span>
-<span>| tags: <a href="/tag/os-x.html">OS X</a><a href="/tag/flash.html">Flash</a></span>
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/ru-he-bu-an-zhuang-flashcheng-xu-lai-an-zhuang-flashcha-jian.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
             </ol><!-- /#posts-list -->
